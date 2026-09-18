@@ -62,15 +62,15 @@ To ensure rapid, deterministic, and non-blocking execution by coding agents with
   - [x] 1.5.3 Implement `ParquetDataCache.load_bars()` reading Parquet back to `BarSeries`.
   - [x] 1.5.4 Test cache write, read, and hit roundtrip in `tests/test_cache.py`.
   - [x] 1.5.5 Test cache miss and date range filtering in `tests/test_cache.py`.
-- [ ] **1.6 Data Adequacy & Corporate Actions Audit**
-  - [ ] 1.6.1 Define benchmark symbols list (5 liquid symbols) in `src/trading_engine/data/benchmarks.py`.
-  - [ ] 1.6.2 Implement unadjusted split/dividend spike detector in `src/trading_engine/data/audit.py`.
-  - [ ] 1.6.3 Add unit tests for split spike detection in `tests/test_audit.py`.
-  - [ ] 1.6.4 Implement contiguous data depth checker in `src/trading_engine/data/audit.py`.
-  - [ ] 1.6.5 Add unit tests for depth checker in `tests/test_audit.py`.
-- [ ] **1.7 Stage 1 Review & Hardening Gate**
-  - [ ] 1.7.1 Run full Stage 1 regression suite across all providers, cache, and audit.
-  - [ ] 1.7.2 Grok audit and sign-off report in `docs/stage1_signoff.md`.
+- [x] **1.6 Data Adequacy & Corporate Actions Audit**
+  - [x] 1.6.1 Define benchmark symbols list (5 liquid symbols) in `src/trading_engine/data/benchmarks.py`.
+  - [x] 1.6.2 Implement unadjusted split/dividend spike detector in `src/trading_engine/data/audit.py`.
+  - [x] 1.6.3 Add unit tests for split spike detection in `tests/test_audit.py`.
+  - [x] 1.6.4 Implement contiguous data depth checker in `src/trading_engine/data/audit.py`.
+  - [x] 1.6.5 Add unit tests for depth checker in `tests/test_audit.py`.
+- [x] **1.7 Stage 1 Review & Hardening Gate**
+  - [x] 1.7.1 Run full Stage 1 regression suite across all providers, cache, and audit.
+  - [x] 1.7.2 Grok audit and sign-off report in `docs/stage1_signoff.md`.
 
 ---
 

@@ -9,9 +9,9 @@
 ---
 
 ## Current Status Overview
-- **Active Stage**: Stage 1 — Environment, Tooling, Packaging & Data Adequacy
-- **Active Micro-Step**: 1.4.1 — Define MarketDataProvider ABC
-- **Overall Completion**: 9 / 72 Granular Micro-Steps Completed
+- **Active Stage**: Stage 2 — Walk-Forward Evaluation Harness & Baselines (Leakage-Proof)
+- **Active Micro-Step**: 2.1.1 — Chronological rolling-origin cutoff generator
+- **Overall Completion**: 21 / 72 Granular Micro-Steps Completed (Stage 1 Complete: 100%)
 
 ---
 
@@ -43,13 +43,13 @@
 | 1 | 1.5.3 | Implement `load_bars()` on `ParquetDataCache` | **DONE** | Supervisor | Grok | 2026-09-18 23:07 | `4f4d3bb`: Range filter & canonical keys |
 | 1 | 1.5.4 | Test cache write & read in `test_cache.py` | **DONE** | Supervisor | Grok | 2026-09-18 23:07 | `4f4d3bb`: Roundtrip hit test passing |
 | 1 | 1.5.5 | Test cache miss & date filtering in `test_cache.py` | **DONE** | Supervisor | Grok | 2026-09-18 23:07 | `4f4d3bb`: Miss, range filter, and merge tests |
-| 1 | 1.6.1 | Define benchmark symbols in `benchmarks.py` | PENDING | - | - | - | 5 liquid benchmark symbols |
-| 1 | 1.6.2 | Implement split/dividend spike detector in `audit.py` | PENDING | - | - | - | Overnight step anomaly detector |
-| 1 | 1.6.3 | Add split spike tests in `test_audit.py` | PENDING | - | - | - | Split spike test cases |
-| 1 | 1.6.4 | Implement contiguous depth checker in `audit.py` | PENDING | - | - | - | Contiguous historical bars audit |
-| 1 | 1.6.5 | Add depth checker tests in `test_audit.py` | PENDING | - | - | - | Depth check test cases |
-| 1 | 1.7.1 | Run full Stage 1 regression suite | PENDING | - | - | - | 100% test pass verification |
-| 1 | 1.7.2 | Grok audit and sign-off in `docs/stage1_signoff.md` | PENDING | - | - | - | Stage 1 Gate Sign-off |
+| 1 | 1.6.1 | Define benchmark symbols in `benchmarks.py` | **DONE** | Supervisor | Grok | 2026-09-18 23:11 | `b4c6ba7`: 5 liquid benchmark symbols |
+| 1 | 1.6.2 | Implement split/dividend spike detector in `audit.py` | **DONE** | Supervisor | Grok | 2026-09-18 23:11 | `b4c6ba7`: 30% split spike detector (3-for-2 caught) |
+| 1 | 1.6.3 | Add split spike tests in `test_audit.py` | **DONE** | Supervisor | Grok | 2026-09-18 23:11 | `b4c6ba7`: Split spike test cases |
+| 1 | 1.6.4 | Implement contiguous depth checker in `audit.py` | **DONE** | Supervisor | Grok | 2026-09-18 23:11 | `b4c6ba7`: Contiguous historical bars audit |
+| 1 | 1.6.5 | Add depth checker tests in `test_audit.py` | **DONE** | Supervisor | Grok | 2026-09-18 23:11 | `b4c6ba7`: Depth check test cases |
+| 1 | 1.7.1 | Run full Stage 1 regression suite | **DONE** | Supervisor | Grok | 2026-09-18 23:16 | 73/73 tests passing (100% pass) |
+| 1 | 1.7.2 | Grok audit and sign-off in `docs/stage1_signoff.md` | **DONE** | Grok | Grok | 2026-09-18 23:16 | Gate approved with follow-ups |
 
 ---
 
