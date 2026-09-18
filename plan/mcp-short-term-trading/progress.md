@@ -34,10 +34,10 @@
 | 1 | 1.4.3a | Test Alpaca single-page fetch in `test_alpaca_provider.py` | **DONE** | Cline | Grok | 2026-09-18 22:54 | `a597374`: Single-page bar parse & Candle check |
 | 1 | 1.4.3b | Test Alpaca pagination in `test_alpaca_provider.py` | **DONE** | Cline | Grok | 2026-09-18 22:54 | `a597374`: Multi-page next_page_token check |
 | 1 | 1.4.3c | Test Alpaca error handling in `test_alpaca_provider.py` | **DONE** | Cline | Grok | 2026-09-18 22:54 | `a597374`: Unsupported timeframe & HTTP errors |
-| 1 | 1.4.4a | Implement `YFinanceDataProvider` interface in `yfinance.py` | PENDING | - | - | - | Provider class & supported timeframes |
-| 1 | 1.4.4b | Implement `fetch_bars()` on `YFinanceDataProvider` | PENDING | - | - | - | Daily candle fetch & Candle mapping |
-| 1 | 1.4.5a | Test YFinance valid fetch in `test_yfinance_provider.py` | PENDING | - | - | - | Mocked daily bars validation |
-| 1 | 1.4.5b | Test YFinance error cases in `test_yfinance_provider.py` | PENDING | - | - | - | Empty data & network failure checks |
+| 1 | 1.4.4a | Implement `YFinanceDataProvider` interface in `yfinance.py` | **DONE** | Cline | Grok | 2026-09-18 23:02 | `59bb476`: Provider class & supported timeframes |
+| 1 | 1.4.4b | Implement `fetch_bars()` on `YFinanceDataProvider` | **DONE** | Cline | Grok | 2026-09-18 23:02 | `59bb476`: Daily candle fetch & Candle mapping |
+| 1 | 1.4.5a | Test YFinance valid fetch in `test_yfinance_provider.py` | **DONE** | Cline | Grok | 2026-09-18 23:02 | `59bb476`: Mocked daily bars validation |
+| 1 | 1.4.5b | Test YFinance error cases in `test_yfinance_provider.py` | **DONE** | Cline | Grok | 2026-09-18 23:02 | `59bb476`: Empty data, missing cols, NaN handling |
 | 1 | 1.5.1 | Implement `ParquetDataCache` path resolver in `cache.py` | PENDING | - | - | - | Directory & path resolution |
 | 1 | 1.5.2 | Implement `save_bars()` on `ParquetDataCache` | PENDING | - | - | - | Parquet serialization |
 | 1 | 1.5.3 | Implement `load_bars()` on `ParquetDataCache` | PENDING | - | - | - | Parquet deserialization to BarSeries |
