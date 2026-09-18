@@ -49,9 +49,9 @@ To ensure rapid, deterministic, and non-blocking execution by coding agents with
 - [ ] **1.4 Historical Market Data Ingestion**
   - [x] 1.4.1 Define abstract base class `MarketDataProvider` and `ProviderError` in `src/trading_engine/data/providers/base.py`.
   - [x] 1.4.2 Implement `AlpacaDataProvider` for 1h/1d/1m/5m/15m bars in `src/trading_engine/data/providers/alpaca.py`.
-  - [ ] 1.4.3a Test `AlpacaDataProvider` single-page bar fetch and `Candle` conversion in `tests/test_alpaca_provider.py`.
-  - [ ] 1.4.3b Test `AlpacaDataProvider` multi-page pagination with `next_page_token` in `tests/test_alpaca_provider.py`.
-  - [ ] 1.4.3c Test `AlpacaDataProvider` unsupported timeframe and HTTP error handling in `tests/test_alpaca_provider.py`.
+  - [x] 1.4.3a Test `AlpacaDataProvider` single-page bar fetch and `Candle` conversion in `tests/test_alpaca_provider.py`.
+  - [x] 1.4.3b Test `AlpacaDataProvider` multi-page pagination with `next_page_token` in `tests/test_alpaca_provider.py`.
+  - [x] 1.4.3c Test `AlpacaDataProvider` unsupported timeframe and HTTP error handling in `tests/test_alpaca_provider.py`.
   - [ ] 1.4.4a Implement `YFinanceDataProvider` skeleton and timeframe mappings in `src/trading_engine/data/providers/yfinance.py`.
   - [ ] 1.4.4b Implement `YFinanceDataProvider.fetch_bars` mapping to `Candle` objects.
   - [ ] 1.4.5a Test `YFinanceDataProvider` valid daily bar fetch with mocked data in `tests/test_yfinance_provider.py`.

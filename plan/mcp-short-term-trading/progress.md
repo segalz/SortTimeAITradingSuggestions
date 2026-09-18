@@ -29,11 +29,11 @@
 | 1 | 1.3.5 | Implement `to_dataframe()` on `BarSeries` | **DONE** | Cline | Grok | 2026-09-18 22:15 | `3b86b27`: DataFrame conversion method |
 | 1 | 1.3.6 | Implement `from_dataframe()` on `BarSeries` | **DONE** | Cline | Grok | 2026-09-18 22:15 | `3b86b27`: Classmethod DataFrame loader |
 | 1 | 1.3.7 | Create DataFrame roundtrip tests in `test_roundtrip.py` | **DONE** | Cline | Grok | 2026-09-18 22:15 | `3b86b27`: Roundtrip fidelity & non-UTC rejection |
-| 1 | 1.4.1 | Define `MarketDataProvider` ABC in `providers/base.py` | **DONE** | Cline | Grok | 2026-09-18 22:20 | ABC & ProviderError interface |
-| 1 | 1.4.2 | Implement `AlpacaDataProvider` in `providers/alpaca.py` | **DONE** | Cline | Grok | 2026-09-18 22:21 | Alpaca Market Data v2 client |
-| 1 | 1.4.3a | Test Alpaca single-page fetch in `test_alpaca_provider.py` | PENDING | - | - | - | Single-page bar parse & Candle check |
-| 1 | 1.4.3b | Test Alpaca pagination in `test_alpaca_provider.py` | PENDING | - | - | - | Multi-page next_page_token check |
-| 1 | 1.4.3c | Test Alpaca error handling in `test_alpaca_provider.py` | PENDING | - | - | - | Unsupported timeframe & HTTP errors |
+| 1 | 1.4.1 | Define `MarketDataProvider` ABC in `providers/base.py` | **DONE** | Cline | Grok | 2026-09-18 22:45 | `a597374`: ABC & ProviderError interface |
+| 1 | 1.4.2 | Implement `AlpacaDataProvider` in `providers/alpaca.py` | **DONE** | Cline | Grok | 2026-09-18 22:50 | `a597374`: Alpaca Market Data v2 client |
+| 1 | 1.4.3a | Test Alpaca single-page fetch in `test_alpaca_provider.py` | **DONE** | Cline | Grok | 2026-09-18 22:54 | `a597374`: Single-page bar parse & Candle check |
+| 1 | 1.4.3b | Test Alpaca pagination in `test_alpaca_provider.py` | **DONE** | Cline | Grok | 2026-09-18 22:54 | `a597374`: Multi-page next_page_token check |
+| 1 | 1.4.3c | Test Alpaca error handling in `test_alpaca_provider.py` | **DONE** | Cline | Grok | 2026-09-18 22:54 | `a597374`: Unsupported timeframe & HTTP errors |
 | 1 | 1.4.4a | Implement `YFinanceDataProvider` interface in `yfinance.py` | PENDING | - | - | - | Provider class & supported timeframes |
 | 1 | 1.4.4b | Implement `fetch_bars()` on `YFinanceDataProvider` | PENDING | - | - | - | Daily candle fetch & Candle mapping |
 | 1 | 1.4.5a | Test YFinance valid fetch in `test_yfinance_provider.py` | PENDING | - | - | - | Mocked daily bars validation |
