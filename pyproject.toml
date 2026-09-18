@@ -25,4 +25,5 @@ packages = ["src/trading_engine"]
 [tool.pytest.ini_options]
 pythonpath = ["src"]
 testpaths = ["tests"]
+addopts = "--basetemp=.pytest_temp"
 norecursedirs = [".venv", "data", "plan", ".git"]
