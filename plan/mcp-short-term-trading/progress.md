@@ -10,8 +10,8 @@
 
 ## Current Status Overview
 - **Active Stage**: Stage 3 — Model-Neutral Contract, Calibration & Cost Model
-- **Active Micro-Step**: 3.1.1 — Define ForecastRequest schema
-- **Overall Completion**: 37 / 72 Granular Micro-Steps Completed (Stage 1 & 2 Complete: 100%)
+- **Active Micro-Step**: 3.2.1 — Define ModelAdapter ABC
+- **Overall Completion**: 40 / 72 Granular Micro-Steps Completed (55.5%)
 
 ---
 
@@ -70,6 +70,9 @@
 | 2 | 2.4.4 | Create unit tests for harness in `test_harness.py` | **DONE** | Supervisor | Grok | 2026-09-18 23:33 | `bd0c334`: 8 harness tests passing |
 | 2 | 2.5.1 | Run full Stage 2 regression suite | **DONE** | Supervisor | Grok | 2026-09-18 23:38 | 109/109 tests passing (100% pass) |
 | 2 | 2.5.2 | Grok audit and sign-off in `docs/stage2_signoff.md` | **DONE** | Grok | Grok | 2026-09-18 23:38 | Gate approved with follow-ups |
+| 3 | 3.1.1 | Define `ForecastRequest` schema in `contracts/forecast.py` | **DONE** | Supervisor | Grok | 2026-09-18 23:53 | Frozen dataclass, immutable mappings, symbol check |
+| 3 | 3.1.2 | Define `ForecastResult` schema with quantiles in `contracts/forecast.py` | **DONE** | Supervisor | Grok | 2026-09-18 23:53 | Quantile monotonicity, UTC & cutoff verification |
+| 3 | 3.1.3 | Create unit tests in `test_forecast_contract.py` | **DONE** | Supervisor | Grok | 2026-09-18 23:53 | Invariant bypass tests, 113/113 passing |
 
 ---
 

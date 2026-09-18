@@ -106,10 +106,10 @@ To ensure rapid, deterministic, and non-blocking execution by coding agents with
 
 ### Stage 3: Model-Neutral Contract, Calibration & Cost Model
 
-- [ ] **3.1 Data Contracts**
-  - [ ] 3.1.1 Define `ForecastRequest` schema in `src/trading_engine/contracts/forecast.py`.
-  - [ ] 3.1.2 Define `ForecastResult` schema with quantiles (P10, P50, P90) in `src/trading_engine/contracts/forecast.py`.
-  - [ ] 3.1.3 Create unit tests in `tests/test_forecast_contract.py`.
+- [x] **3.1 Data Contracts**
+  - [x] 3.1.1 Define `ForecastRequest` schema in `src/trading_engine/contracts/forecast.py`.
+  - [x] 3.1.2 Define `ForecastResult` schema with quantiles (P10, P50, P90) in `src/trading_engine/contracts/forecast.py`.
+  - [x] 3.1.3 Create unit tests in `tests/test_forecast_contract.py`.
 - [ ] **3.2 Model Adapter Interface**
   - [ ] 3.2.1 Define `ModelAdapter` abstract base class with lifecycle hooks (`load`, `predict`, `unload`, `capabilities`) in `src/trading_engine/contracts/adapter.py`.
   - [ ] 3.2.2 Implement thread pinning and CPU affinity clamp helper in `src/trading_engine/contracts/device.py`.
