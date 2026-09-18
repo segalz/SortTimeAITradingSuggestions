@@ -10,8 +10,8 @@
 
 ## Current Status Overview
 - **Active Stage**: Stage 3 — Model-Neutral Contract, Calibration & Cost Model
-- **Active Micro-Step**: 3.2.1 — Define ModelAdapter ABC
-- **Overall Completion**: 40 / 72 Granular Micro-Steps Completed (55.5%)
+- **Active Micro-Step**: 3.3.1 — Implement taker fee and spread calculator
+- **Overall Completion**: 43 / 72 Granular Micro-Steps Completed (59.7%)
 
 ---
 
@@ -73,6 +73,9 @@
 | 3 | 3.1.1 | Define `ForecastRequest` schema in `contracts/forecast.py` | **DONE** | Supervisor | Grok | 2026-09-18 23:53 | Frozen dataclass, immutable mappings, symbol check |
 | 3 | 3.1.2 | Define `ForecastResult` schema with quantiles in `contracts/forecast.py` | **DONE** | Supervisor | Grok | 2026-09-18 23:53 | Quantile monotonicity, UTC & cutoff verification |
 | 3 | 3.1.3 | Create unit tests in `test_forecast_contract.py` | **DONE** | Supervisor | Grok | 2026-09-18 23:53 | Invariant bypass tests, 113/113 passing |
+| 3 | 3.2.1 | Define `ModelAdapter` ABC and capabilities in `contracts/adapter.py` | **DONE** | Supervisor | Grok | 2026-09-19 00:03 | Lifecycle ABC, `ModelAdapterCapabilities` |
+| 3 | 3.2.2 | Implement thread pinning & CPU affinity clamp in `contracts/device.py` | **DONE** | Supervisor | Grok | 2026-09-19 00:03 | `clamp_cpu_threads`, context manager, affinity helper |
+| 3 | 3.2.3 | Create unit tests in `test_model_adapter.py` | **DONE** | Supervisor | Grok | 2026-09-19 00:03 | Lifecycle, capabilities, affinity, 120/120 passing |
 
 ---
 

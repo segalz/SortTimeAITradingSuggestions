@@ -1,4 +1,13 @@
-"""Data and execution contracts for model inputs, outputs, and adapters."""
+from .adapter import BaselineAdapter, ModelAdapter, ModelAdapterCapabilities
+from .device import clamp_cpu_threads, cpu_thread_limit
 from .forecast import ForecastRequest, ForecastResult
 
-__all__ = ["ForecastRequest", "ForecastResult"]
+__all__ = [
+    "ForecastRequest",
+    "ForecastResult",
+    "ModelAdapter",
+    "ModelAdapterCapabilities",
+    "BaselineAdapter",
+    "clamp_cpu_threads",
+    "cpu_thread_limit",
+]

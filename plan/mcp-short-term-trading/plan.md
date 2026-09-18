@@ -110,10 +110,10 @@ To ensure rapid, deterministic, and non-blocking execution by coding agents with
   - [x] 3.1.1 Define `ForecastRequest` schema in `src/trading_engine/contracts/forecast.py`.
   - [x] 3.1.2 Define `ForecastResult` schema with quantiles (P10, P50, P90) in `src/trading_engine/contracts/forecast.py`.
   - [x] 3.1.3 Create unit tests in `tests/test_forecast_contract.py`.
-- [ ] **3.2 Model Adapter Interface**
-  - [ ] 3.2.1 Define `ModelAdapter` abstract base class with lifecycle hooks (`load`, `predict`, `unload`, `capabilities`) in `src/trading_engine/contracts/adapter.py`.
-  - [ ] 3.2.2 Implement thread pinning and CPU affinity clamp helper in `src/trading_engine/contracts/device.py`.
-  - [ ] 3.2.3 Create unit tests in `tests/test_model_adapter.py`.
+- [x] **3.2 Model Adapter Interface**
+  - [x] 3.2.1 Define `ModelAdapter` abstract base class with lifecycle hooks (`load`, `predict`, `unload`, `capabilities`) in `src/trading_engine/contracts/adapter.py`.
+  - [x] 3.2.2 Implement thread pinning and CPU affinity clamp helper in `src/trading_engine/contracts/device.py`.
+  - [x] 3.2.3 Create unit tests in `tests/test_model_adapter.py`.
 - [ ] **3.3 Transaction Cost Model**
   - [ ] 3.3.1 Implement taker fee and spread calculator in `src/trading_engine/risk/cost_model.py`.
   - [ ] 3.3.2 Implement slippage model (constant + volatility-scaled) in `src/trading_engine/risk/cost_model.py`.
