@@ -10,8 +10,8 @@
 
 ## Current Status Overview
 - **Active Stage**: Stage 2 — Walk-Forward Evaluation Harness & Baselines (Leakage-Proof)
-- **Active Micro-Step**: 2.1.1 — Chronological rolling-origin cutoff generator
-- **Overall Completion**: 21 / 72 Granular Micro-Steps Completed (Stage 1 Complete: 100%)
+- **Active Micro-Step**: 2.2.1 — Implement LastValueBaseline
+- **Overall Completion**: 24 / 72 Granular Micro-Steps Completed
 
 ---
 
@@ -50,6 +50,9 @@
 | 1 | 1.6.5 | Add depth checker tests in `test_audit.py` | **DONE** | Supervisor | Grok | 2026-09-18 23:11 | `b4c6ba7`: Depth check test cases |
 | 1 | 1.7.1 | Run full Stage 1 regression suite | **DONE** | Supervisor | Grok | 2026-09-18 23:16 | 73/73 tests passing (100% pass) |
 | 1 | 1.7.2 | Grok audit and sign-off in `docs/stage1_signoff.md` | **DONE** | Grok | Grok | 2026-09-18 23:16 | Gate approved with follow-ups |
+| 2 | 2.1.1 | Implement rolling-origin cutoff generator in `walk_forward.py` | **DONE** | Supervisor | Grok | 2026-09-18 23:20 | `7a2056f`: Stride math & cutoffs |
+| 2 | 2.1.2 | Add out-of-sample window partitioner | **DONE** | Supervisor | Grok | 2026-09-18 23:20 | `7a2056f`: Rolling and expanding windows |
+| 2 | 2.1.3 | Add unit tests verifying zero time travel in `test_walk_forward.py` | **DONE** | Supervisor | Grok | 2026-09-18 23:20 | `7a2056f`: 6 tests passing, zero leakage |
 
 ---
 

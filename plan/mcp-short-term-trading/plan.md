@@ -76,10 +76,10 @@ To ensure rapid, deterministic, and non-blocking execution by coding agents with
 
 ### Stage 2: Walk-Forward Evaluation Harness & Baselines (Leakage-Proof)
 
-- [ ] **2.1 Walk-Forward Splitter**
-  - [ ] 2.1.1 Implement chronological rolling-origin cutoff generator in `src/trading_engine/evaluation/walk_forward.py`.
-  - [ ] 2.1.2 Add calibration and out-of-sample test window partitioner.
-  - [ ] 2.1.3 Create unit tests in `tests/test_walk_forward.py` verifying zero time-travel in splits.
+- [x] **2.1 Walk-Forward Splitter**
+  - [x] 2.1.1 Implement chronological rolling-origin cutoff generator in `src/trading_engine/evaluation/walk_forward.py`.
+  - [x] 2.1.2 Add calibration and out-of-sample test window partitioner.
+  - [x] 2.1.3 Create unit tests in `tests/test_walk_forward.py` verifying zero time-travel in splits.
 - [ ] **2.2 Baseline Models**
   - [ ] 2.2.1 Implement `LastValueBaseline` (constant persistence) in `src/trading_engine/models/baselines.py`.
   - [ ] 2.2.2 Create unit tests in `tests/test_baseline_last_value.py`.
