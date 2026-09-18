@@ -37,14 +37,14 @@ To ensure rapid, deterministic, and non-blocking execution by coding agents:
   - [x] 1.2.1 Implement `src/trading_engine/config.py` with `Settings` dataclass and safe redaction.
   - [x] 1.2.2 Implement strict paper-only validation (reject live AK keys, require PK, min secret len).
   - [x] 1.2.3 Add custom `__repr__` leak prevention and unit tests in `tests/test_config.py`.
-- [ ] **1.3 Data Contracts: Candle & BarSeries**
-  - [ ] 1.3.1 Create `src/trading_engine/data/__init__.py` and define `DataContractError` and `Candle` dataclass with price/timestamp validators in `src/trading_engine/data/models.py`.
-  - [ ] 1.3.2 Create `tests/test_candle.py` testing `Candle` valid creation and error cases (naive datetime, inverted low/high, negative price).
-  - [ ] 1.3.3 Add `BarSeries` container in `src/trading_engine/data/models.py` with strict monotonic timestamp assertion.
-  - [ ] 1.3.4 Create `tests/test_bar_series.py` verifying `BarSeries` ordering, duplicate rejection, and indexing.
-  - [ ] 1.3.5 Add `to_dataframe()` method to `BarSeries`.
-  - [ ] 1.3.6 Add `from_dataframe()` classmethod to `BarSeries`.
-  - [ ] 1.3.7 Create `tests/test_dataframe_roundtrip.py` testing DataFrame conversions.
+- [x] **1.3 Data Contracts: Candle & BarSeries**
+  - [x] 1.3.1 Create `src/trading_engine/data/__init__.py` and define `DataContractError` and `Candle` dataclass with price/timestamp validators in `src/trading_engine/data/models.py`.
+  - [x] 1.3.2 Create `tests/test_candle.py` testing `Candle` valid creation and error cases (naive datetime, inverted low/high, negative price).
+  - [x] 1.3.3 Add `BarSeries` container in `src/trading_engine/data/models.py` with strict monotonic timestamp assertion.
+  - [x] 1.3.4 Create `tests/test_bar_series.py` verifying `BarSeries` ordering, duplicate rejection, and indexing.
+  - [x] 1.3.5 Add `to_dataframe()` method to `BarSeries`.
+  - [x] 1.3.6 Add `from_dataframe()` classmethod to `BarSeries`.
+  - [x] 1.3.7 Create `tests/test_dataframe_roundtrip.py` testing DataFrame conversions.
 - [ ] **1.4 Historical Market Data Ingestion**
   - [ ] 1.4.1 Define abstract base class `MarketDataProvider` in `src/trading_engine/data/providers/base.py`.
   - [ ] 1.4.2 Implement `AlpacaDataProvider` for 1h bars in `src/trading_engine/data/providers/alpaca.py`.

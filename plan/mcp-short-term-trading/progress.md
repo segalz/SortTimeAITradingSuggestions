@@ -10,8 +10,8 @@
 
 ## Current Status Overview
 - **Active Stage**: Stage 1 — Environment, Tooling, Packaging & Data Adequacy
-- **Active Micro-Step**: 1.3.1 — Define DataContractError and Candle Dataclass
-- **Overall Completion**: 2 / 72 Granular Micro-Steps Completed
+- **Active Micro-Step**: 1.4.1 — Define MarketDataProvider ABC
+- **Overall Completion**: 9 / 72 Granular Micro-Steps Completed
 
 ---
 
@@ -22,13 +22,13 @@
 | **Init** | **0.0** | Clone repo, setup plan directory, write master plan | **DONE** | Supervisor | User | 2026-09-18 19:41 | `210586e`: initial plan |
 | 1 | 1.1 | Project Scaffolding, Hatchling Packaging & pytest | **DONE** | Cline | Grok | 2026-09-18 20:03 | `5508c5b`: pyproject, dirs, gitignore |
 | 1 | 1.2 | Configuration & Secrets Management (Paper-only) | **DONE** | Cline | Grok | 2026-09-18 20:12 | `1a5070b`: config.py, redaction, 23 tests |
-| 1 | 1.3.1 | Define `DataContractError` and `Candle` in `models.py` | PENDING | - | - | - | Single dataclass & validators |
-| 1 | 1.3.2 | Create unit tests for `Candle` in `test_candle.py` | PENDING | - | - | - | Price & timestamp validation tests |
-| 1 | 1.3.3 | Define `BarSeries` container with monotonic check | PENDING | - | - | - | Monotonic ordering assertion |
-| 1 | 1.3.4 | Create unit tests for `BarSeries` in `test_bar_series.py` | PENDING | - | - | - | Order & index assertions |
-| 1 | 1.3.5 | Implement `to_dataframe()` on `BarSeries` | PENDING | - | - | - | DataFrame conversion method |
-| 1 | 1.3.6 | Implement `from_dataframe()` on `BarSeries` | PENDING | - | - | - | Classmethod DataFrame loader |
-| 1 | 1.3.7 | Create DataFrame roundtrip tests in `test_roundtrip.py` | PENDING | - | - | - | Roundtrip fidelity tests |
+| 1 | 1.3.1 | Define `DataContractError` and `Candle` in `models.py` | **DONE** | Cline | Grok | 2026-09-18 22:15 | `3b86b27`: Candle dataclass & validations |
+| 1 | 1.3.2 | Create unit tests for `Candle` in `test_candle.py` | **DONE** | Cline | Grok | 2026-09-18 22:15 | `3b86b27`: Price & timestamp validation tests |
+| 1 | 1.3.3 | Define `BarSeries` container with monotonic check | **DONE** | Cline | Grok | 2026-09-18 22:15 | `3b86b27`: Monotonic ordering assertion |
+| 1 | 1.3.4 | Create unit tests for `BarSeries` in `test_bar_series.py` | **DONE** | Cline | Grok | 2026-09-18 22:15 | `3b86b27`: Order & index assertions |
+| 1 | 1.3.5 | Implement `to_dataframe()` on `BarSeries` | **DONE** | Cline | Grok | 2026-09-18 22:15 | `3b86b27`: DataFrame conversion method |
+| 1 | 1.3.6 | Implement `from_dataframe()` on `BarSeries` | **DONE** | Cline | Grok | 2026-09-18 22:15 | `3b86b27`: Classmethod DataFrame loader |
+| 1 | 1.3.7 | Create DataFrame roundtrip tests in `test_roundtrip.py` | **DONE** | Cline | Grok | 2026-09-18 22:15 | `3b86b27`: Roundtrip fidelity & non-UTC rejection |
 | 1 | 1.4.1 | Define `MarketDataProvider` ABC in `providers/base.py` | PENDING | - | - | - | Abstract provider interface |
 | 1 | 1.4.2 | Implement `AlpacaDataProvider` for 1h candles | PENDING | - | - | - | Alpaca Market Data client |
 | 1 | 1.4.3 | Add unit tests in `test_alpaca_provider.py` | PENDING | - | - | - | Mocked Alpaca response tests |
@@ -58,4 +58,5 @@
 - **2026-09-18 20:03 UTC [Micro-Step 1.1]**: Completed by Cline, audited and verified by Grok. Created `pyproject.toml` (Hatchling, dependencies, pythonpath), `.gitignore`, package structure, `data/cache/.gitkeep`, `docs/.gitkeep`, and passing smoke test `tests/test_scaffolding.py`. Committed in `5508c5b`.
 - **2026-09-18 20:12 UTC [Micro-Step 1.2]**: Completed by Cline, audited and verified by Grok. Implemented `src/trading_engine/config.py` with strict paper-only rule (unconditional AK rejection), safe redaction, custom `__repr__` leak prevention, and comprehensive tests in `tests/test_config.py` (23 tests passing). Committed in `1a5070b`.
 - **2026-09-18 21:58 UTC [Plan Refinement]**: Per user feedback, redesigned all remaining steps into single-responsibility, fast atomic micro-steps to eliminate timeouts and ensure high execution velocity.
-- Next immediate task: Micro-Step 1.3.1 (Define DataContractError and Candle in `models.py`).
+- **2026-09-18 22:15 UTC [Micro-Step 1.3]**: Completed by Cline, audited and verified by Grok. Implemented `Candle`, `BarSeries`, strict UTC enforcement (rejecting naive and non-UTC timestamps), and DataFrame roundtrips. 41 tests passing in `tests/test_candle.py`, `tests/test_bar_series.py`, and `tests/test_dataframe_roundtrip.py`. Committed in `3b86b27`.
+- Next immediate task: Micro-Step 1.4.1 (Define MarketDataProvider ABC in `src/trading_engine/data/providers/base.py`).
