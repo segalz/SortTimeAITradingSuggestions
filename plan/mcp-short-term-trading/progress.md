@@ -10,8 +10,8 @@
 
 ## Current Status Overview
 - **Active Stage**: Stage 2 — Walk-Forward Evaluation Harness & Baselines (Leakage-Proof)
-- **Active Micro-Step**: 2.3.1 — Leakage Test 1: Off-by-one bar close timestamp assertion
-- **Overall Completion**: 30 / 72 Granular Micro-Steps Completed
+- **Active Micro-Step**: 2.4.1 — Implement forecast error metrics
+- **Overall Completion**: 35 / 72 Granular Micro-Steps Completed
 
 ---
 
@@ -59,6 +59,11 @@
 | 2 | 2.2.4 | Create unit tests in `test_baselines.py` | **DONE** | Supervisor | Grok | 2026-09-18 23:22 | `223cc98`: Drift & price floor tests passing |
 | 2 | 2.2.5 | Implement `MovingAverageBaseline` in `baselines.py` | **DONE** | Supervisor | Grok | 2026-09-18 23:22 | `223cc98`: Rolling mean projection |
 | 2 | 2.2.6 | Create unit tests in `test_baselines.py` | **DONE** | Supervisor | Grok | 2026-09-18 23:22 | `223cc98`: MA window & clamp tests passing |
+| 2 | 2.3.1 | Leakage Test 1: Off-by-one bar timestamp assertion | **DONE** | Supervisor | Grok | 2026-09-18 23:28 | `16fe72a`: Disjoint windows & strict cutoff check |
+| 2 | 2.3.2 | Leakage Test 2: Target shuffle collapse test | **DONE** | Supervisor | Grok | 2026-09-18 23:28 | `16fe72a`: Real model collapses to ~50% on shuffle |
+| 2 | 2.3.3 | Leakage Test 3: Future-scaler bit-identical test | **DONE** | Supervisor | Grok | 2026-09-18 23:28 | `16fe72a`: WindowScaler invariant verified |
+| 2 | 2.3.4 | Leakage Test 4: Incomplete live candle exclusion test | **DONE** | Supervisor | Grok | 2026-09-18 23:28 | `16fe72a`: filter_completed_candles verified |
+| 2 | 2.3.5 | Leakage Test 5: Price adjustment consistency check | **DONE** | Supervisor | Grok | 2026-09-18 23:28 | `16fe72a`: Point-in-time split action verified |
 
 ---
 

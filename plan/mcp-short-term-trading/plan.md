@@ -87,12 +87,12 @@ To ensure rapid, deterministic, and non-blocking execution by coding agents with
   - [x] 2.2.4 Create unit tests in `tests/test_baselines.py`.
   - [x] 2.2.5 Implement `MovingAverageBaseline` (SMA/EMA path) in `src/trading_engine/models/baselines.py`.
   - [x] 2.2.6 Create unit tests in `tests/test_baselines.py`.
-- [ ] **2.3 Executable Leakage Tests**
-  - [ ] 2.3.1 Implement Leakage Test 1: Off-by-one bar close timestamp assertion in `tests/test_leakage_off_by_one.py`.
-  - [ ] 2.3.2 Implement Leakage Test 2: Target shuffle collapse test in `tests/test_leakage_target_shuffle.py`.
-  - [ ] 2.3.3 Implement Leakage Test 3: Future-scaler bit-identical test in `tests/test_leakage_future_scaler.py`.
-  - [ ] 2.3.4 Implement Leakage Test 4: Incomplete live candle exclusion test in `tests/test_leakage_incomplete_candle.py`.
-  - [ ] 2.3.5 Implement Leakage Test 5: Price adjustment consistency check in `tests/test_leakage_adjustment.py`.
+- [x] **2.3 Executable Leakage Tests**
+  - [x] 2.3.1 Implement Leakage Test 1: Off-by-one bar close timestamp assertion in `tests/test_leakage_off_by_one.py`.
+  - [x] 2.3.2 Implement Leakage Test 2: Target shuffle collapse test in `tests/test_leakage_target_shuffle.py`.
+  - [x] 2.3.3 Implement Leakage Test 3: Future-scaler bit-identical test in `tests/test_leakage_future_scaler.py`.
+  - [x] 2.3.4 Implement Leakage Test 4: Incomplete live candle exclusion test in `tests/test_leakage_incomplete_candle.py`.
+  - [x] 2.3.5 Implement Leakage Test 5: Price adjustment consistency check in `tests/test_leakage_adjustment.py`.
 - [ ] **2.4 Evaluation Metrics & Runner**
   - [ ] 2.4.1 Implement forecast error metrics (MAE, RMSE, Directional Accuracy) in `src/trading_engine/evaluation/metrics.py`.
   - [ ] 2.4.2 Implement Benjamini-Hochberg multiplicity correction in `src/trading_engine/evaluation/stats.py`.
