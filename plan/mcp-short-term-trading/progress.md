@@ -10,8 +10,8 @@
 
 ## Current Status Overview
 - **Active Stage**: Stage 3 — Model-Neutral Contract, Calibration & Cost Model
-- **Active Micro-Step**: 3.4.1 — Implement Platt scaling in calibration.py
-- **Overall Completion**: 47 / 72 Granular Micro-Steps Completed (65.3%)
+- **Active Micro-Step**: 3.5.1 — Run full Stage 3 test suite
+- **Overall Completion**: 51 / 72 Granular Micro-Steps Completed (70.8%)
 
 ---
 
@@ -80,6 +80,10 @@
 | 3 | 3.3.2 | Implement slippage model in `risk/cost_model.py` | **DONE** | Supervisor | Grok | 2026-09-19 00:08 | 2.5 bps const + alpha * volatility |
 | 3 | 3.3.3 | Implement 2x cost sensitivity gate function in `risk/cost_model.py` | **DONE** | Supervisor | Grok | 2026-09-19 00:08 | Gate rejects trades unprofitable under 2x friction |
 | 3 | 3.3.4 | Create unit tests in `test_cost_model.py` | **DONE** | Supervisor | Grok | 2026-09-19 00:08 | Validations, buy/sell prices, 2x gate tests, 126/126 passing |
+| 3 | 3.4.1 | Implement Platt scaling in `evaluation/calibration.py` | **DONE** | Supervisor | Grok | 2026-09-19 00:27 | Newton-Raphson, target smoothing, L2 ridge regularization |
+| 3 | 3.4.2 | Implement Isotonic regression calibrator in `evaluation/calibration.py` | **DONE** | Supervisor | Grok | 2026-09-19 00:27 | PAVA with pre-aggregated ties, monotonic guarantee |
+| 3 | 3.4.3 | Implement Brier score and reliability diagram binning in `evaluation/calibration.py` | **DONE** | Supervisor | Grok | 2026-09-19 00:27 | Correct float boundary binning & Expected Calibration Error |
+| 3 | 3.4.4 | Create unit tests in `test_calibration.py` | **DONE** | Supervisor | Grok | 2026-09-19 00:27 | Adversarial tie tests, constant prior tests, 134/134 passing |
 
 ---
 
