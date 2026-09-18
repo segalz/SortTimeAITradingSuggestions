@@ -10,8 +10,8 @@
 
 ## Current Status Overview
 - **Active Stage**: Stage 3 — Model-Neutral Contract, Calibration & Cost Model
-- **Active Micro-Step**: 3.3.1 — Implement taker fee and spread calculator
-- **Overall Completion**: 43 / 72 Granular Micro-Steps Completed (59.7%)
+- **Active Micro-Step**: 3.4.1 — Implement Platt scaling in calibration.py
+- **Overall Completion**: 47 / 72 Granular Micro-Steps Completed (65.3%)
 
 ---
 
@@ -76,6 +76,10 @@
 | 3 | 3.2.1 | Define `ModelAdapter` ABC and capabilities in `contracts/adapter.py` | **DONE** | Supervisor | Grok | 2026-09-19 00:03 | Lifecycle ABC, `ModelAdapterCapabilities` |
 | 3 | 3.2.2 | Implement thread pinning & CPU affinity clamp in `contracts/device.py` | **DONE** | Supervisor | Grok | 2026-09-19 00:03 | `clamp_cpu_threads`, context manager, affinity helper |
 | 3 | 3.2.3 | Create unit tests in `test_model_adapter.py` | **DONE** | Supervisor | Grok | 2026-09-19 00:03 | Lifecycle, capabilities, affinity, 120/120 passing |
+| 3 | 3.3.1 | Implement taker fee and spread calculator in `risk/cost_model.py` | **DONE** | Supervisor | Grok | 2026-09-19 00:08 | 5 bps taker fee, 2.5 bps half-spread, maker fee 0 |
+| 3 | 3.3.2 | Implement slippage model in `risk/cost_model.py` | **DONE** | Supervisor | Grok | 2026-09-19 00:08 | 2.5 bps const + alpha * volatility |
+| 3 | 3.3.3 | Implement 2x cost sensitivity gate function in `risk/cost_model.py` | **DONE** | Supervisor | Grok | 2026-09-19 00:08 | Gate rejects trades unprofitable under 2x friction |
+| 3 | 3.3.4 | Create unit tests in `test_cost_model.py` | **DONE** | Supervisor | Grok | 2026-09-19 00:08 | Validations, buy/sell prices, 2x gate tests, 126/126 passing |
 
 ---
 

@@ -114,11 +114,11 @@ To ensure rapid, deterministic, and non-blocking execution by coding agents with
   - [x] 3.2.1 Define `ModelAdapter` abstract base class with lifecycle hooks (`load`, `predict`, `unload`, `capabilities`) in `src/trading_engine/contracts/adapter.py`.
   - [x] 3.2.2 Implement thread pinning and CPU affinity clamp helper in `src/trading_engine/contracts/device.py`.
   - [x] 3.2.3 Create unit tests in `tests/test_model_adapter.py`.
-- [ ] **3.3 Transaction Cost Model**
-  - [ ] 3.3.1 Implement taker fee and spread calculator in `src/trading_engine/risk/cost_model.py`.
-  - [ ] 3.3.2 Implement slippage model (constant + volatility-scaled) in `src/trading_engine/risk/cost_model.py`.
-  - [ ] 3.3.3 Implement 2x cost sensitivity gate function in `src/trading_engine/risk/cost_model.py`.
-  - [ ] 3.3.4 Create unit tests in `tests/test_cost_model.py`.
+- [x] **3.3 Transaction Cost Model**
+  - [x] 3.3.1 Implement taker fee and spread calculator in `src/trading_engine/risk/cost_model.py`.
+  - [x] 3.3.2 Implement slippage model (constant + volatility-scaled) in `src/trading_engine/risk/cost_model.py`.
+  - [x] 3.3.3 Implement 2x cost sensitivity gate function in `src/trading_engine/risk/cost_model.py`.
+  - [x] 3.3.4 Create unit tests in `tests/test_cost_model.py`.
 - [ ] **3.4 Probability Calibration**
   - [ ] 3.4.1 Implement Platt scaling (logistic) calibrated strictly on calibration window in `src/trading_engine/evaluation/calibration.py`.
   - [ ] 3.4.2 Implement Isotonic regression calibrator in `src/trading_engine/evaluation/calibration.py`.
