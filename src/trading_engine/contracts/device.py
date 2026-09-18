@@ -100,3 +100,61 @@ def set_cpu_affinity(cpus: Sequence[int] | None = None) -> list[int] | None:
         pass
 
     return None
+
+
+def get_process_rss_mb() -> float:
+    """Return current process resident set size (RSS) memory in megabytes."""
+    # Method 1: psutil
+    try:
+        import psutil  # type: ignore
+
+        return float(psutil.Process().memory_info().rss) / (1024.0 * 1024.0)
+    except (ImportError, AttributeError, OSError):
+        pass
+
+    # Method 2: Linux resource
+    try:
+        import resource  # type: ignore
+
+        # ru_maxrss is in kilobytes on Linux
+        kb = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+        return float(kb) / 1024.0
+    except (ImportError, AttributeError):
+        pass
+
+    # Method 3: Windows psapi via ctypes
+    try:
+        import ctypes
+        from ctypes import wintypes
+
+        class _PMC(ctypes.Structure):
+            _fields_ = [
+                ("cb", wintypes.DWORD),
+                ("PageFaultCount", wintypes.DWORD),
+                ("PeakWorkingSetSize", ctypes.c_size_t),
+                ("WorkingSetSize", ctypes.c_size_t),
+                ("QuotaPeakPagedPoolUsage", ctypes.c_size_t),
+                ("QuotaPagedPoolUsage", ctypes.c_size_t),
+                ("QuotaPeakNonPagedPoolUsage", ctypes.c_size_t),
+                ("QuotaNonPagedPoolUsage", ctypes.c_size_t),
+                ("PagefileUsage", ctypes.c_size_t),
+                ("PeakPagefileUsage", ctypes.c_size_t),
+            ]
+
+        psapi = ctypes.WinDLL("psapi.dll")
+        psapi.GetProcessMemoryInfo.argtypes = [
+            wintypes.HANDLE,
+            ctypes.POINTER(_PMC),
+            wintypes.DWORD,
+        ]
+        psapi.GetProcessMemoryInfo.restype = wintypes.BOOL
+
+        pmc = _PMC()
+        pmc.cb = ctypes.sizeof(_PMC)
+        h_proc = ctypes.windll.kernel32.GetCurrentProcess()
+        if psapi.GetProcessMemoryInfo(h_proc, ctypes.byref(pmc), pmc.cb):
+            return float(pmc.WorkingSetSize) / (1024.0 * 1024.0)
+    except Exception:
+        pass
+
+    return 0.0

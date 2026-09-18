@@ -135,10 +135,10 @@ To ensure rapid, deterministic, and non-blocking execution by coding agents with
 - [x] **4.1 CPU-Only Device Guard**
   - [x] 4.1.1 Implement runtime assertion forbidding CUDA/MPS/DirectML in `src/trading_engine/models/device_guard.py`.
   - [x] 4.1.2 Create unit tests in `tests/test_device_guard.py`.
-- [ ] **4.2 Chronos-Bolt-Tiny Integration**
-  - [ ] 4.2.1 Implement `ChronosBoltTinyAdapter` in `src/trading_engine/models/chronos_adapter.py`.
-  - [ ] 4.2.2 Implement smoke test and cold-load timer in `tests/test_chronos_smoke.py`.
-  - [ ] 4.2.3 Run walk-forward benchmark on benchmark symbols and record p50/p95 latency and RSS memory.
+- [x] **4.2 Chronos-Bolt-Tiny Integration**
+  - [x] 4.2.1 Implement `ChronosBoltTinyAdapter` in `src/trading_engine/models/chronos_adapter.py`.
+  - [x] 4.2.2 Implement smoke test and cold-load timer in `tests/test_chronos_smoke.py`.
+  - [x] 4.2.3 Run walk-forward benchmark on benchmark symbols and record p50/p95 latency and RSS memory.
 - [ ] **4.3 Kronos-Mini Integration**
   - [ ] 4.3.1 Vendor `NeoQuasar/Kronos-mini` code and tokenizer in `src/trading_engine/models/vendored/kronos/`.
   - [ ] 4.3.2 Implement `KronosMiniAdapter` in `src/trading_engine/models/kronos_adapter.py`.

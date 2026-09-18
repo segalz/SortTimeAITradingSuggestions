@@ -10,8 +10,8 @@
 
 ## Current Status Overview
 - **Active Stage**: Stage 4 — CPU Forecasting Models Spike (Chronos-Bolt-Tiny & Kronos-Mini)
-- **Active Micro-Step**: 4.2.1 — Implement ChronosBoltTinyAdapter in chronos_adapter.py
-- **Overall Completion**: 55 / 72 Granular Micro-Steps Completed (76.4%)
+- **Active Micro-Step**: 4.3.1 — Vendor NeoQuasar/Kronos-mini code and tokenizer
+- **Overall Completion**: 58 / 72 Granular Micro-Steps Completed (80.5%)
 
 ---
 
@@ -88,6 +88,9 @@
 | 3 | 3.5.2 | Grok audit and sign-off in `docs/stage3_signoff.md` | **DONE** | Grok | Grok | 2026-09-19 00:36 | Gate approved with follow-ups |
 | 4 | 4.1.1 | Implement CPU-only device guard in `models/device_guard.py` | **DONE** | Supervisor | Grok | 2026-09-19 00:43 | Fail-closed CUDA/MPS/DirectML rejection, env isolation |
 | 4 | 4.1.2 | Create unit tests in `test_device_guard.py` | **DONE** | Supervisor | Grok | 2026-09-19 00:43 | Forbidden targets, objects, active CUDA detection, 140/140 passing |
+| 4 | 4.2.1 | Implement `ChronosBoltTinyAdapter` in `models/chronos_adapter.py` | **DONE** | Supervisor | Grok | 2026-09-19 01:03 | Official `predict_quantiles` tensor unpack, ModelAdapter |
+| 4 | 4.2.2 | Implement smoke test and cold-load timer in `test_chronos_smoke.py` | **DONE** | Supervisor | Grok | 2026-09-19 01:03 | Cold-load < 500ms, official API mock, ImportError check |
+| 4 | 4.2.3 | Run walk-forward benchmark across benchmark symbols in `test_chronos_benchmark.py` | **DONE** | Supervisor | Grok | 2026-09-19 01:03 | P50 < 250ms, P95 < 500ms, RSS < 1024MB, 144/144 passing |
 
 ---
 

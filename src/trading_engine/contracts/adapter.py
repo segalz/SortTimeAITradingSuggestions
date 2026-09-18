@@ -5,11 +5,13 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from datetime import timedelta
-from typing import Sequence
+from typing import TYPE_CHECKING, Any, Sequence
+
+if TYPE_CHECKING:
+    from trading_engine.models.baselines import BaselineModel
 
 from trading_engine.contracts.forecast import ForecastRequest, ForecastResult
 from trading_engine.data.models import DataContractError
-from trading_engine.models.baselines import BaselineModel
 
 
 @dataclass(frozen=True)

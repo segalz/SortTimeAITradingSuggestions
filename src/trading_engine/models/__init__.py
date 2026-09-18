@@ -1,4 +1,4 @@
-"""Quantitative forecasting, baseline models, and device guards."""
+"""Quantitative forecasting, baseline models, model adapters, and device guards."""
 
 from .baselines import (
     BaselineModel,
@@ -7,10 +7,12 @@ from .baselines import (
     LastValueBaseline,
     MovingAverageBaseline,
 )
+from .chronos_adapter import ChronosBoltTinyAdapter
 from .device_guard import DeviceGuardError, assert_cpu_only, enforce_cpu_environment
 
 __all__ = [
     "BaselineModel",
+    "ChronosBoltTinyAdapter",
     "DeviceGuardError",
     "DriftBaseline",
     "Forecast",
