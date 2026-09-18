@@ -15,6 +15,7 @@ dependencies = [
     "mcp>=1.0.0",
     "python-dotenv>=1.0.1",
     "yfinance>=0.2.38",
+    "pyarrow>=15.0.0",
 ]
 
 [project.optional-dependencies]
