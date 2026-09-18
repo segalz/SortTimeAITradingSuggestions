@@ -33,7 +33,7 @@ For every micro-step:
   - Create `pyproject.toml` with Hatchling build-backend, defining dependencies: `pandas`, `numpy`, `httpx`, `pydantic`, `mcp`, `python-dotenv`, `pytest`.
   - Create `.gitignore` (ignoring `.venv`, `keys.env`, `*.db`, `*.parquet`, `__pycache__`, `artifacts/`, `data/cache/`).
   - Create directory structure: `src/trading_engine/`, `tests/`, `data/cache/`, `docs/`.
-- [ ] **1.2 Configuration & Secrets Management**
+- [x] **1.2 Configuration & Secrets Management**
   - Implement `src/trading_engine/config.py` loading `keys.env` with strict redaction in logs.
   - Support credentials: Alpaca Paper API keys, Finnhub API key, and LLM provider keys.
   - Add unit tests validating credential format, prefix checks, and redaction.

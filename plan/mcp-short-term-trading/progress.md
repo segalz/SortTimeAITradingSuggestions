@@ -10,8 +10,8 @@
 
 ## Current Status Overview
 - **Active Stage**: Stage 1 — Environment, Tooling, Packaging & Data Adequacy
-- **Active Micro-Step**: 1.2 — Configuration & Secrets Management
-- **Overall Completion**: 1 / 52 Micro-Steps Completed
+- **Active Micro-Step**: 1.3 — Data Ingestion Contract & Candle Representation
+- **Overall Completion**: 2 / 52 Micro-Steps Completed
 
 ---
 
@@ -21,7 +21,7 @@
 |---|---|---|---|---|---|---|---|
 | **Init** | **0.0** | Clone repo, setup plan directory, write master plan | **DONE** | Supervisor | User | 2026-09-18 19:41 | `plan/mcp-short-term-trading/plan.md` created |
 | 1 | 1.1 | Project Scaffolding & Packaging | **DONE** | Cline | Grok | 2026-09-18 20:03 | Commit `5508c5b`: pyproject, gitignore, dirs |
-| 1 | 1.2 | Configuration & Secrets Management | PENDING | - | - | - | `src/trading_engine/config.py` |
+| 1 | 1.2 | Configuration & Secrets Management | **DONE** | Cline | Grok | 2026-09-18 20:12 | Commit `1a5070b`: config.py, tests, redaction |
 | 1 | 1.3 | Data Ingestion Contract & Candle Representation | PENDING | - | - | - | `Candle`, `BarSeries` schemas |
 | 1 | 1.4 | Historical Market Data Providers (1h & 1d) | PENDING | - | - | - | Alpaca & yfinance clients |
 | 1 | 1.5 | Local Persistent Data Cache | PENDING | - | - | - | Parquet/SQLite offline cache |
@@ -93,4 +93,5 @@
 
 ### Stage 1: Environment, Tooling, Packaging & Data Adequacy
 - **2026-09-18 20:03 UTC [Micro-Step 1.1]**: Completed by Cline, audited and verified by Grok. Created `pyproject.toml` (Hatchling, dependencies, pythonpath), `.gitignore`, package structure, `data/cache/.gitkeep`, `docs/.gitkeep`, and passing smoke test `tests/test_scaffolding.py`. Committed in `5508c5b`.
-- Next immediate task: Micro-Step 1.2 (Configuration & Secrets Management).
+- **2026-09-18 20:12 UTC [Micro-Step 1.2]**: Completed by Cline, audited and verified by Grok. Implemented `src/trading_engine/config.py` with strict paper-only rule (unconditional AK rejection), safe redaction, custom `__repr__` leak prevention, and comprehensive tests in `tests/test_config.py` (23 tests passing). Committed in `1a5070b`.
+- Next immediate task: Micro-Step 1.3 (Data Ingestion Contract & Candle Representation).
