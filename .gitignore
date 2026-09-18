@@ -1,0 +1,12 @@
+.venv/
+keys.env
+*.db
+*.parquet
+__pycache__/
+artifacts/
+data/cache/*
+!data/cache/.gitkeep
+.pytest_cache/
+*.egg-info/
+dist/
+build/
