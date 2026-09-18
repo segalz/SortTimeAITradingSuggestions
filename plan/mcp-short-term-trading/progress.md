@@ -9,9 +9,9 @@
 ---
 
 ## Current Status Overview
-- **Active Stage**: Stage 2 — Walk-Forward Evaluation Harness & Baselines (Leakage-Proof)
-- **Active Micro-Step**: 2.4.1 — Implement forecast error metrics
-- **Overall Completion**: 35 / 72 Granular Micro-Steps Completed
+- **Active Stage**: Stage 3 — Model-Neutral Contract, Calibration & Cost Model
+- **Active Micro-Step**: 3.1.1 — Define ForecastRequest schema
+- **Overall Completion**: 37 / 72 Granular Micro-Steps Completed (Stage 1 & 2 Complete: 100%)
 
 ---
 
@@ -64,6 +64,12 @@
 | 2 | 2.3.3 | Leakage Test 3: Future-scaler bit-identical test | **DONE** | Supervisor | Grok | 2026-09-18 23:28 | `16fe72a`: WindowScaler invariant verified |
 | 2 | 2.3.4 | Leakage Test 4: Incomplete live candle exclusion test | **DONE** | Supervisor | Grok | 2026-09-18 23:28 | `16fe72a`: filter_completed_candles verified |
 | 2 | 2.3.5 | Leakage Test 5: Price adjustment consistency check | **DONE** | Supervisor | Grok | 2026-09-18 23:28 | `16fe72a`: Point-in-time split action verified |
+| 2 | 2.4.1 | Implement forecast error metrics in `metrics.py` | **DONE** | Supervisor | Grok | 2026-09-18 23:33 | `bd0c334`: MAE, RMSE, MAPE, unbiased DA |
+| 2 | 2.4.2 | Implement Benjamini-Hochberg in `stats.py` | **DONE** | Supervisor | Grok | 2026-09-18 23:33 | `bd0c334`: Monotone FDR step-up procedure |
+| 2 | 2.4.3 | Implement `HarnessRunner` in `harness.py` | **DONE** | Supervisor | Grok | 2026-09-18 23:33 | `bd0c334`: Non-leaking rolling-origin runner |
+| 2 | 2.4.4 | Create unit tests for harness in `test_harness.py` | **DONE** | Supervisor | Grok | 2026-09-18 23:33 | `bd0c334`: 8 harness tests passing |
+| 2 | 2.5.1 | Run full Stage 2 regression suite | **DONE** | Supervisor | Grok | 2026-09-18 23:38 | 109/109 tests passing (100% pass) |
+| 2 | 2.5.2 | Grok audit and sign-off in `docs/stage2_signoff.md` | **DONE** | Grok | Grok | 2026-09-18 23:38 | Gate approved with follow-ups |
 
 ---
 
