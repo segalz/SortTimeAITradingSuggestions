@@ -3,12 +3,12 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from dataclasses import dataclass, field
-from datetime import datetime, timedelta, timezone
-from typing import Mapping, Sequence
+from dataclasses import dataclass
+from datetime import timedelta
+from typing import Sequence
 
 from trading_engine.contracts.forecast import ForecastRequest, ForecastResult
-from trading_engine.data.models import BarSeries, Candle, DataContractError
+from trading_engine.data.models import DataContractError
 from trading_engine.models.baselines import BaselineModel
 
 
@@ -30,7 +30,8 @@ class ModelAdapterCapabilities:
             raise DataContractError("supported_timeframes must not be empty")
         if self.max_horizon_bars <= 0:
             raise DataContractError("max_horizon_bars must be positive")
-        object.__setattr__(self, "supported_timeframes", tuple(self.supported_timeframes))
+        normalized_timeframes = tuple(tf.lower().strip() for tf in self.supported_timeframes)
+        object.__setattr__(self, "supported_timeframes", normalized_timeframes)
 
 
 class ModelAdapter(ABC):
@@ -126,7 +127,8 @@ class BaselineAdapter(ModelAdapter):
         if not self._is_loaded:
             raise RuntimeError(f"Model {self._model_id} is not loaded. Call load() first.")
 
-        if request.timeframe not in self._capabilities.supported_timeframes:
+        norm_tf = request.timeframe.lower().strip()
+        if norm_tf not in self._capabilities.supported_timeframes:
             raise ValueError(
                 f"Timeframe '{request.timeframe}' is not supported by {self._model_id}. "
                 f"Supported: {self._capabilities.supported_timeframes}"
@@ -142,22 +144,17 @@ class BaselineAdapter(ModelAdapter):
         cutoff = request.history[-1].timestamp
         future_ts = tuple(cutoff + (i + 1) * step_delta for i in range(request.horizon_bars))
 
-        # Generate point forecasts using wrapped baseline
         forecast = self._baseline.predict(request.history, request.horizon_bars)
         point_forecast = tuple(float(p) for p in forecast.point_forecasts)
 
-        # Baseline quantile generation: deterministic baseline centers quantiles
-        # with small pseudo-spread proportional to (q - 0.5) to maintain monotonicity
         quantile_forecasts: dict[float, tuple[float, ...]] = {}
         for q in request.quantiles:
-            # Spread offset factor: e.g. for q=0.5 -> 0, for q=0.1 -> -0.01, for q=0.9 -> +0.01
             offset_factor = (float(q) - 0.5) * 0.02
             quantile_series = tuple(
                 max(0.01, round(p * (1.0 + offset_factor), 6)) for p in point_forecast
             )
             quantile_forecasts[float(q)] = quantile_series
 
-        # Determine directional probabilities
         last_close = request.history[-1].close
         final_price = point_forecast[-1]
         if final_price > last_close:

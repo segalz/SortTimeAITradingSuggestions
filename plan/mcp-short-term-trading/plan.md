@@ -124,9 +124,9 @@ To ensure rapid, deterministic, and non-blocking execution by coding agents with
   - [x] 3.4.2 Implement Isotonic regression calibrator in `src/trading_engine/evaluation/calibration.py`.
   - [x] 3.4.3 Implement Brier score and reliability diagram binning in `src/trading_engine/evaluation/calibration.py`.
   - [x] 3.4.4 Create unit tests in `tests/test_calibration.py`.
-- [ ] **3.5 Stage 3 Review & Hardening Gate**
-  - [ ] 3.5.1 Run full Stage 3 test suite.
-  - [ ] 3.5.2 Grok audit and sign-off report in `docs/stage3_signoff.md`.
+- [x] **3.5 Stage 3 Review & Hardening Gate**
+  - [x] 3.5.1 Run full Stage 3 test suite.
+  - [x] 3.5.2 Grok audit and sign-off report in `docs/stage3_signoff.md`.
 
 ---
 

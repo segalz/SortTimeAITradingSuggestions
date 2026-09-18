@@ -1,5 +1,5 @@
 from .adapter import BaselineAdapter, ModelAdapter, ModelAdapterCapabilities
-from .device import clamp_cpu_threads, cpu_thread_limit
+from .device import clamp_cpu_threads, cpu_thread_limit, set_cpu_affinity
 from .forecast import ForecastRequest, ForecastResult
 
 __all__ = [
@@ -10,4 +10,5 @@ __all__ = [
     "BaselineAdapter",
     "clamp_cpu_threads",
     "cpu_thread_limit",
+    "set_cpu_affinity",
 ]

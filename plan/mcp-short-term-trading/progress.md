@@ -9,9 +9,9 @@
 ---
 
 ## Current Status Overview
-- **Active Stage**: Stage 3 — Model-Neutral Contract, Calibration & Cost Model
-- **Active Micro-Step**: 3.5.1 — Run full Stage 3 test suite
-- **Overall Completion**: 51 / 72 Granular Micro-Steps Completed (70.8%)
+- **Active Stage**: Stage 4 — CPU Forecasting Models Spike (Chronos-Bolt-Tiny & Kronos-Mini)
+- **Active Micro-Step**: 4.1.1 — Implement runtime assertion forbidding CUDA/MPS/DirectML
+- **Overall Completion**: 53 / 72 Granular Micro-Steps Completed (73.6%)
 
 ---
 
@@ -84,6 +84,8 @@
 | 3 | 3.4.2 | Implement Isotonic regression calibrator in `evaluation/calibration.py` | **DONE** | Supervisor | Grok | 2026-09-19 00:27 | PAVA with pre-aggregated ties, monotonic guarantee |
 | 3 | 3.4.3 | Implement Brier score and reliability diagram binning in `evaluation/calibration.py` | **DONE** | Supervisor | Grok | 2026-09-19 00:27 | Correct float boundary binning & Expected Calibration Error |
 | 3 | 3.4.4 | Create unit tests in `test_calibration.py` | **DONE** | Supervisor | Grok | 2026-09-19 00:27 | Adversarial tie tests, constant prior tests, 134/134 passing |
+| 3 | 3.5.1 | Run full Stage 3 regression suite | **DONE** | Supervisor | Grok | 2026-09-19 | 134/134 tests passing (100% pass) |
+| 3 | 3.5.2 | Grok audit and sign-off in `docs/stage3_signoff.md` | **DONE** | Grok | Grok | 2026-09-19 | Gate approved with follow-ups |
 
 ---
 
