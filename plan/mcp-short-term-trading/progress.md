@@ -10,8 +10,8 @@
 
 ## Current Status Overview
 - **Active Stage**: Stage 1 — Environment, Tooling, Packaging & Data Adequacy
-- **Active Micro-Step**: 1.1 — Project Scaffolding & Packaging
-- **Overall Completion**: 0 / 52 Micro-Steps Completed
+- **Active Micro-Step**: 1.2 — Configuration & Secrets Management
+- **Overall Completion**: 1 / 52 Micro-Steps Completed
 
 ---
 
@@ -20,7 +20,7 @@
 | Stage | Micro-Step | Description | Status | Coder | Reviewer | Completed At | Notes / Artifacts |
 |---|---|---|---|---|---|---|---|
 | **Init** | **0.0** | Clone repo, setup plan directory, write master plan | **DONE** | Supervisor | User | 2026-09-18 19:41 | `plan/mcp-short-term-trading/plan.md` created |
-| 1 | 1.1 | Project Scaffolding & Packaging | PENDING | - | - | - | `pyproject.toml`, `.gitignore`, dirs |
+| 1 | 1.1 | Project Scaffolding & Packaging | **DONE** | Cline | Grok | 2026-09-18 20:03 | Commit `5508c5b`: pyproject, gitignore, dirs |
 | 1 | 1.2 | Configuration & Secrets Management | PENDING | - | - | - | `src/trading_engine/config.py` |
 | 1 | 1.3 | Data Ingestion Contract & Candle Representation | PENDING | - | - | - | `Candle`, `BarSeries` schemas |
 | 1 | 1.4 | Historical Market Data Providers (1h & 1d) | PENDING | - | - | - | Alpaca & yfinance clients |
@@ -90,4 +90,7 @@
 - Created directory `plan/mcp-short-term-trading/`.
 - Authored detailed master plan in `plan.md` comprising 9 stages and 52 atomic micro-steps.
 - Initialized execution tracking ledger in `progress.md`.
-- Next immediate task: Micro-step 1.1 (Project Scaffolding & Packaging).
+
+### Stage 1: Environment, Tooling, Packaging & Data Adequacy
+- **2026-09-18 20:03 UTC [Micro-Step 1.1]**: Completed by Cline, audited and verified by Grok. Created `pyproject.toml` (Hatchling, dependencies, pythonpath), `.gitignore`, package structure, `data/cache/.gitkeep`, `docs/.gitkeep`, and passing smoke test `tests/test_scaffolding.py`. Committed in `5508c5b`.
+- Next immediate task: Micro-Step 1.2 (Configuration & Secrets Management).

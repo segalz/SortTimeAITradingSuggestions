@@ -29,7 +29,7 @@ For every micro-step:
 ### Stage 1: Environment, Tooling, Packaging & Data Adequacy
 **Goal:** Establish a rock-solid Python 3.12+ project foundation, secret loading, data contracts, local caching, and verify historical data depth for 1h candles.
 
-- [ ] **1.1 Project Scaffolding & Packaging**
+- [x] **1.1 Project Scaffolding & Packaging**
   - Create `pyproject.toml` with Hatchling build-backend, defining dependencies: `pandas`, `numpy`, `httpx`, `pydantic`, `mcp`, `python-dotenv`, `pytest`.
   - Create `.gitignore` (ignoring `.venv`, `keys.env`, `*.db`, `*.parquet`, `__pycache__`, `artifacts/`, `data/cache/`).
   - Create directory structure: `src/trading_engine/`, `tests/`, `data/cache/`, `docs/`.
