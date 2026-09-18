@@ -10,8 +10,8 @@
 
 ## Current Status Overview
 - **Active Stage**: Stage 2 — Walk-Forward Evaluation Harness & Baselines (Leakage-Proof)
-- **Active Micro-Step**: 2.2.1 — Implement LastValueBaseline
-- **Overall Completion**: 24 / 72 Granular Micro-Steps Completed
+- **Active Micro-Step**: 2.3.1 — Leakage Test 1: Off-by-one bar close timestamp assertion
+- **Overall Completion**: 30 / 72 Granular Micro-Steps Completed
 
 ---
 
@@ -53,6 +53,12 @@
 | 2 | 2.1.1 | Implement rolling-origin cutoff generator in `walk_forward.py` | **DONE** | Supervisor | Grok | 2026-09-18 23:20 | `7a2056f`: Stride math & cutoffs |
 | 2 | 2.1.2 | Add out-of-sample window partitioner | **DONE** | Supervisor | Grok | 2026-09-18 23:20 | `7a2056f`: Rolling and expanding windows |
 | 2 | 2.1.3 | Add unit tests verifying zero time travel in `test_walk_forward.py` | **DONE** | Supervisor | Grok | 2026-09-18 23:20 | `7a2056f`: 6 tests passing, zero leakage |
+| 2 | 2.2.1 | Implement `LastValueBaseline` in `baselines.py` | **DONE** | Supervisor | Grok | 2026-09-18 23:22 | `223cc98`: Constant persistence model |
+| 2 | 2.2.2 | Create unit tests in `test_baselines.py` | **DONE** | Supervisor | Grok | 2026-09-18 23:22 | `223cc98`: LastValue tests passing |
+| 2 | 2.2.3 | Implement `DriftBaseline` in `baselines.py` | **DONE** | Supervisor | Grok | 2026-09-18 23:22 | `223cc98`: Historical slope with 0.01 floor |
+| 2 | 2.2.4 | Create unit tests in `test_baselines.py` | **DONE** | Supervisor | Grok | 2026-09-18 23:22 | `223cc98`: Drift & price floor tests passing |
+| 2 | 2.2.5 | Implement `MovingAverageBaseline` in `baselines.py` | **DONE** | Supervisor | Grok | 2026-09-18 23:22 | `223cc98`: Rolling mean projection |
+| 2 | 2.2.6 | Create unit tests in `test_baselines.py` | **DONE** | Supervisor | Grok | 2026-09-18 23:22 | `223cc98`: MA window & clamp tests passing |
 
 ---
 

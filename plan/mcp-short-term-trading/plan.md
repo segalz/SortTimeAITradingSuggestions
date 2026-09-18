@@ -80,13 +80,13 @@ To ensure rapid, deterministic, and non-blocking execution by coding agents with
   - [x] 2.1.1 Implement chronological rolling-origin cutoff generator in `src/trading_engine/evaluation/walk_forward.py`.
   - [x] 2.1.2 Add calibration and out-of-sample test window partitioner.
   - [x] 2.1.3 Create unit tests in `tests/test_walk_forward.py` verifying zero time-travel in splits.
-- [ ] **2.2 Baseline Models**
-  - [ ] 2.2.1 Implement `LastValueBaseline` (constant persistence) in `src/trading_engine/models/baselines.py`.
-  - [ ] 2.2.2 Create unit tests in `tests/test_baseline_last_value.py`.
-  - [ ] 2.2.3 Implement `DriftBaseline` (historical return extrapolation) in `src/trading_engine/models/baselines.py`.
-  - [ ] 2.2.4 Create unit tests in `tests/test_baseline_drift.py`.
-  - [ ] 2.2.5 Implement `MovingAverageBaseline` (SMA/EMA path) in `src/trading_engine/models/baselines.py`.
-  - [ ] 2.2.6 Create unit tests in `tests/test_baseline_ma.py`.
+- [x] **2.2 Baseline Models**
+  - [x] 2.2.1 Implement `LastValueBaseline` (constant persistence) in `src/trading_engine/models/baselines.py`.
+  - [x] 2.2.2 Create unit tests in `tests/test_baselines.py`.
+  - [x] 2.2.3 Implement `DriftBaseline` (historical return extrapolation) in `src/trading_engine/models/baselines.py`.
+  - [x] 2.2.4 Create unit tests in `tests/test_baselines.py`.
+  - [x] 2.2.5 Implement `MovingAverageBaseline` (SMA/EMA path) in `src/trading_engine/models/baselines.py`.
+  - [x] 2.2.6 Create unit tests in `tests/test_baselines.py`.
 - [ ] **2.3 Executable Leakage Tests**
   - [ ] 2.3.1 Implement Leakage Test 1: Off-by-one bar close timestamp assertion in `tests/test_leakage_off_by_one.py`.
   - [ ] 2.3.2 Implement Leakage Test 2: Target shuffle collapse test in `tests/test_leakage_target_shuffle.py`.
