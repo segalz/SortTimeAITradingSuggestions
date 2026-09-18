@@ -38,11 +38,11 @@
 | 1 | 1.4.4b | Implement `fetch_bars()` on `YFinanceDataProvider` | **DONE** | Cline | Grok | 2026-09-18 23:02 | `59bb476`: Daily candle fetch & Candle mapping |
 | 1 | 1.4.5a | Test YFinance valid fetch in `test_yfinance_provider.py` | **DONE** | Cline | Grok | 2026-09-18 23:02 | `59bb476`: Mocked daily bars validation |
 | 1 | 1.4.5b | Test YFinance error cases in `test_yfinance_provider.py` | **DONE** | Cline | Grok | 2026-09-18 23:02 | `59bb476`: Empty data, missing cols, NaN handling |
-| 1 | 1.5.1 | Implement `ParquetDataCache` path resolver in `cache.py` | PENDING | - | - | - | Directory & path resolution |
-| 1 | 1.5.2 | Implement `save_bars()` on `ParquetDataCache` | PENDING | - | - | - | Parquet serialization |
-| 1 | 1.5.3 | Implement `load_bars()` on `ParquetDataCache` | PENDING | - | - | - | Parquet deserialization to BarSeries |
-| 1 | 1.5.4 | Test cache write & read in `test_cache.py` | PENDING | - | - | - | Roundtrip cache hit check |
-| 1 | 1.5.5 | Test cache miss & date filtering in `test_cache.py` | PENDING | - | - | - | Cache miss & date slice check |
+| 1 | 1.5.1 | Implement `ParquetDataCache` path resolver in `cache.py` | **DONE** | Supervisor | Grok | 2026-09-18 23:07 | `4f4d3bb`: Canonical path resolution |
+| 1 | 1.5.2 | Implement `save_bars()` on `ParquetDataCache` | **DONE** | Supervisor | Grok | 2026-09-18 23:07 | `4f4d3bb`: Atomic temp write & deduplication |
+| 1 | 1.5.3 | Implement `load_bars()` on `ParquetDataCache` | **DONE** | Supervisor | Grok | 2026-09-18 23:07 | `4f4d3bb`: Range filter & canonical keys |
+| 1 | 1.5.4 | Test cache write & read in `test_cache.py` | **DONE** | Supervisor | Grok | 2026-09-18 23:07 | `4f4d3bb`: Roundtrip hit test passing |
+| 1 | 1.5.5 | Test cache miss & date filtering in `test_cache.py` | **DONE** | Supervisor | Grok | 2026-09-18 23:07 | `4f4d3bb`: Miss, range filter, and merge tests |
 | 1 | 1.6.1 | Define benchmark symbols in `benchmarks.py` | PENDING | - | - | - | 5 liquid benchmark symbols |
 | 1 | 1.6.2 | Implement split/dividend spike detector in `audit.py` | PENDING | - | - | - | Overnight step anomaly detector |
 | 1 | 1.6.3 | Add split spike tests in `test_audit.py` | PENDING | - | - | - | Split spike test cases |

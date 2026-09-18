@@ -56,12 +56,12 @@ To ensure rapid, deterministic, and non-blocking execution by coding agents with
   - [x] 1.4.4b Implement `YFinanceDataProvider.fetch_bars` mapping to `Candle` objects.
   - [x] 1.4.5a Test `YFinanceDataProvider` valid daily bar fetch with mocked data in `tests/test_yfinance_provider.py`.
   - [x] 1.4.5b Test `YFinanceDataProvider` error handling and empty data rejection in `tests/test_yfinance_provider.py`.
-- [ ] **1.5 Local Persistent Cache (Parquet)**
-  - [ ] 1.5.1 Implement `ParquetDataCache` path resolver and partition helper in `src/trading_engine/data/cache.py`.
-  - [ ] 1.5.2 Implement `ParquetDataCache.save_bars()` serializing `BarSeries` to Parquet.
-  - [ ] 1.5.3 Implement `ParquetDataCache.load_bars()` reading Parquet back to `BarSeries`.
-  - [ ] 1.5.4 Test cache write, read, and hit roundtrip in `tests/test_cache.py`.
-  - [ ] 1.5.5 Test cache miss and date range filtering in `tests/test_cache.py`.
+- [x] **1.5 Local Persistent Cache (Parquet)**
+  - [x] 1.5.1 Implement `ParquetDataCache` path resolver and partition helper in `src/trading_engine/data/cache.py`.
+  - [x] 1.5.2 Implement `ParquetDataCache.save_bars()` serializing `BarSeries` to Parquet.
+  - [x] 1.5.3 Implement `ParquetDataCache.load_bars()` reading Parquet back to `BarSeries`.
+  - [x] 1.5.4 Test cache write, read, and hit roundtrip in `tests/test_cache.py`.
+  - [x] 1.5.5 Test cache miss and date range filtering in `tests/test_cache.py`.
 - [ ] **1.6 Data Adequacy & Corporate Actions Audit**
   - [ ] 1.6.1 Define benchmark symbols list (5 liquid symbols) in `src/trading_engine/data/benchmarks.py`.
   - [ ] 1.6.2 Implement unadjusted split/dividend spike detector in `src/trading_engine/data/audit.py`.
