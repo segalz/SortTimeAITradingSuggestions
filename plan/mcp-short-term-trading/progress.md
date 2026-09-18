@@ -29,19 +29,26 @@
 | 1 | 1.3.5 | Implement `to_dataframe()` on `BarSeries` | **DONE** | Cline | Grok | 2026-09-18 22:15 | `3b86b27`: DataFrame conversion method |
 | 1 | 1.3.6 | Implement `from_dataframe()` on `BarSeries` | **DONE** | Cline | Grok | 2026-09-18 22:15 | `3b86b27`: Classmethod DataFrame loader |
 | 1 | 1.3.7 | Create DataFrame roundtrip tests in `test_roundtrip.py` | **DONE** | Cline | Grok | 2026-09-18 22:15 | `3b86b27`: Roundtrip fidelity & non-UTC rejection |
-| 1 | 1.4.1 | Define `MarketDataProvider` ABC in `providers/base.py` | PENDING | - | - | - | Abstract provider interface |
-| 1 | 1.4.2 | Implement `AlpacaDataProvider` for 1h candles | PENDING | - | - | - | Alpaca Market Data client |
-| 1 | 1.4.3 | Add unit tests in `test_alpaca_provider.py` | PENDING | - | - | - | Mocked Alpaca response tests |
-| 1 | 1.4.4 | Implement `YFinanceDataProvider` for daily fallback | PENDING | - | - | - | yfinance wrapper |
-| 1 | 1.4.5 | Add unit tests in `test_yfinance_provider.py` | PENDING | - | - | - | Mocked yfinance tests |
-| 1 | 1.5.1 | Implement `ParquetDataCache` interface in `cache.py` | PENDING | - | - | - | Cache directory structure |
-| 1 | 1.5.2 | Implement `save_bars()` and `load_bars()` | PENDING | - | - | - | Parquet persistence |
-| 1 | 1.5.3 | Add cache unit tests in `test_cache.py` | PENDING | - | - | - | Hit/miss/write tests |
-| 1 | 1.6.1 | Define benchmark symbols in `benchmarks.py` | PENDING | - | - | - | 5 benchmark symbols |
-| 1 | 1.6.2 | Implement split/dividend spike detector in `audit.py` | PENDING | - | - | - | Anomaly return detector |
-| 1 | 1.6.3 | Add audit unit tests in `test_audit.py` | PENDING | - | - | - | Split spike test cases |
-| 1 | 1.6.4 | Create audit CLI script `scripts/audit_data.py` | PENDING | - | - | - | 3-year history auditor |
-| 1 | 1.7.1 | Run full Stage 1 regression suite | PENDING | - | - | - | 100% pass verification |
+| 1 | 1.4.1 | Define `MarketDataProvider` ABC in `providers/base.py` | **DONE** | Cline | Grok | 2026-09-18 22:20 | ABC & ProviderError interface |
+| 1 | 1.4.2 | Implement `AlpacaDataProvider` in `providers/alpaca.py` | **DONE** | Cline | Grok | 2026-09-18 22:21 | Alpaca Market Data v2 client |
+| 1 | 1.4.3a | Test Alpaca single-page fetch in `test_alpaca_provider.py` | PENDING | - | - | - | Single-page bar parse & Candle check |
+| 1 | 1.4.3b | Test Alpaca pagination in `test_alpaca_provider.py` | PENDING | - | - | - | Multi-page next_page_token check |
+| 1 | 1.4.3c | Test Alpaca error handling in `test_alpaca_provider.py` | PENDING | - | - | - | Unsupported timeframe & HTTP errors |
+| 1 | 1.4.4a | Implement `YFinanceDataProvider` interface in `yfinance.py` | PENDING | - | - | - | Provider class & supported timeframes |
+| 1 | 1.4.4b | Implement `fetch_bars()` on `YFinanceDataProvider` | PENDING | - | - | - | Daily candle fetch & Candle mapping |
+| 1 | 1.4.5a | Test YFinance valid fetch in `test_yfinance_provider.py` | PENDING | - | - | - | Mocked daily bars validation |
+| 1 | 1.4.5b | Test YFinance error cases in `test_yfinance_provider.py` | PENDING | - | - | - | Empty data & network failure checks |
+| 1 | 1.5.1 | Implement `ParquetDataCache` path resolver in `cache.py` | PENDING | - | - | - | Directory & path resolution |
+| 1 | 1.5.2 | Implement `save_bars()` on `ParquetDataCache` | PENDING | - | - | - | Parquet serialization |
+| 1 | 1.5.3 | Implement `load_bars()` on `ParquetDataCache` | PENDING | - | - | - | Parquet deserialization to BarSeries |
+| 1 | 1.5.4 | Test cache write & read in `test_cache.py` | PENDING | - | - | - | Roundtrip cache hit check |
+| 1 | 1.5.5 | Test cache miss & date filtering in `test_cache.py` | PENDING | - | - | - | Cache miss & date slice check |
+| 1 | 1.6.1 | Define benchmark symbols in `benchmarks.py` | PENDING | - | - | - | 5 liquid benchmark symbols |
+| 1 | 1.6.2 | Implement split/dividend spike detector in `audit.py` | PENDING | - | - | - | Overnight step anomaly detector |
+| 1 | 1.6.3 | Add split spike tests in `test_audit.py` | PENDING | - | - | - | Split spike test cases |
+| 1 | 1.6.4 | Implement contiguous depth checker in `audit.py` | PENDING | - | - | - | Contiguous historical bars audit |
+| 1 | 1.6.5 | Add depth checker tests in `test_audit.py` | PENDING | - | - | - | Depth check test cases |
+| 1 | 1.7.1 | Run full Stage 1 regression suite | PENDING | - | - | - | 100% test pass verification |
 | 1 | 1.7.2 | Grok audit and sign-off in `docs/stage1_signoff.md` | PENDING | - | - | - | Stage 1 Gate Sign-off |
 
 ---

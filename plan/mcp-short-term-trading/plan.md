@@ -12,16 +12,17 @@ The system combines:
 
 ---
 
-## Operating Protocol & Atomic Micro-Step Rules
+## Operating Protocol & Ultra-Micro Step Rules (Max 5 Minutes Work)
 
-To ensure rapid, deterministic, and non-blocking execution by coding agents:
-1. **Single Responsibility Rule**: Each micro-step does exactly ONE atomic thing (one dataclass, one validator, one standalone function, or one test file).
-2. **Execution Limit**: A micro-step must be solvable in under 30 seconds with minimal prompt size (< 15 lines).
-3. **Step Workflow**:
-   - Supervisor (Antigravity) issues a short, razor-sharp instruction.
-   - Coder Model (Cline) edits the target file and runs unit tests.
-   - Reviewer Model (Grok) validates the atomic diff.
-   - Supervisor logs completion in `progress.md` and commits to Git.
+To ensure rapid, deterministic, and non-blocking execution by coding agents within short session limits:
+1. **Nano-Step Granularity**: Every micro-step is budgeted for **at most 2–3 minutes of execution** (maximum 5 minutes end-to-end including review diff and test run).
+2. **Single Responsibility Rule**: Each step modifies exactly ONE file and accomplishes ONE atomic unit (one class interface, one function, or one specific test case).
+3. **Razor-Sharp Prompts**: Prompt instructions must be concise (< 8 lines), specifying exact signatures and avoiding open-ended ambiguity.
+4. **Step Workflow**:
+   - Supervisor issues a focused nano-prompt with stdin EOF.
+   - Coder Model generates atomic code change.
+   - Reviewer Model (Grok) audits diff independently.
+   - Supervisor verifies test pass, commits to Git, and records progress in `progress.md`.
 
 ---
 
@@ -38,30 +39,37 @@ To ensure rapid, deterministic, and non-blocking execution by coding agents:
   - [x] 1.2.2 Implement strict paper-only validation (reject live AK keys, require PK, min secret len).
   - [x] 1.2.3 Add custom `__repr__` leak prevention and unit tests in `tests/test_config.py`.
 - [x] **1.3 Data Contracts: Candle & BarSeries**
-  - [x] 1.3.1 Create `src/trading_engine/data/__init__.py` and define `DataContractError` and `Candle` dataclass with price/timestamp validators in `src/trading_engine/data/models.py`.
-  - [x] 1.3.2 Create `tests/test_candle.py` testing `Candle` valid creation and error cases (naive datetime, inverted low/high, negative price).
+  - [x] 1.3.1 Create `src/trading_engine/data/__init__.py` and define `DataContractError` and `Candle` dataclass in `src/trading_engine/data/models.py`.
+  - [x] 1.3.2 Create `tests/test_candle.py` testing `Candle` price and UTC timestamp validations.
   - [x] 1.3.3 Add `BarSeries` container in `src/trading_engine/data/models.py` with strict monotonic timestamp assertion.
   - [x] 1.3.4 Create `tests/test_bar_series.py` verifying `BarSeries` ordering, duplicate rejection, and indexing.
   - [x] 1.3.5 Add `to_dataframe()` method to `BarSeries`.
   - [x] 1.3.6 Add `from_dataframe()` classmethod to `BarSeries`.
   - [x] 1.3.7 Create `tests/test_dataframe_roundtrip.py` testing DataFrame conversions.
 - [ ] **1.4 Historical Market Data Ingestion**
-  - [ ] 1.4.1 Define abstract base class `MarketDataProvider` in `src/trading_engine/data/providers/base.py`.
-  - [ ] 1.4.2 Implement `AlpacaDataProvider` for 1h bars in `src/trading_engine/data/providers/alpaca.py`.
-  - [ ] 1.4.3 Add unit tests for `AlpacaDataProvider` with mocked API responses in `tests/test_alpaca_provider.py`.
-  - [ ] 1.4.4 Implement `YFinanceDataProvider` for fallback daily candles in `src/trading_engine/data/providers/yfinance.py`.
-  - [ ] 1.4.5 Add unit tests for `YFinanceDataProvider` with mocked data in `tests/test_yfinance_provider.py`.
-- [ ] **1.5 Local Persistent Cache**
-  - [ ] 1.5.1 Implement `ParquetDataCache` interface in `src/trading_engine/data/cache.py`.
-  - [ ] 1.5.2 Add `save_bars()` and `load_bars()` with automatic parquet file organization by symbol/timeframe.
-  - [ ] 1.5.3 Create unit tests in `tests/test_cache.py` verifying cache write, read, hit, and miss behavior.
+  - [x] 1.4.1 Define abstract base class `MarketDataProvider` and `ProviderError` in `src/trading_engine/data/providers/base.py`.
+  - [x] 1.4.2 Implement `AlpacaDataProvider` for 1h/1d/1m/5m/15m bars in `src/trading_engine/data/providers/alpaca.py`.
+  - [ ] 1.4.3a Test `AlpacaDataProvider` single-page bar fetch and `Candle` conversion in `tests/test_alpaca_provider.py`.
+  - [ ] 1.4.3b Test `AlpacaDataProvider` multi-page pagination with `next_page_token` in `tests/test_alpaca_provider.py`.
+  - [ ] 1.4.3c Test `AlpacaDataProvider` unsupported timeframe and HTTP error handling in `tests/test_alpaca_provider.py`.
+  - [ ] 1.4.4a Implement `YFinanceDataProvider` skeleton and timeframe mappings in `src/trading_engine/data/providers/yfinance.py`.
+  - [ ] 1.4.4b Implement `YFinanceDataProvider.fetch_bars` mapping to `Candle` objects.
+  - [ ] 1.4.5a Test `YFinanceDataProvider` valid daily bar fetch with mocked data in `tests/test_yfinance_provider.py`.
+  - [ ] 1.4.5b Test `YFinanceDataProvider` error handling and empty data rejection in `tests/test_yfinance_provider.py`.
+- [ ] **1.5 Local Persistent Cache (Parquet)**
+  - [ ] 1.5.1 Implement `ParquetDataCache` path resolver and partition helper in `src/trading_engine/data/cache.py`.
+  - [ ] 1.5.2 Implement `ParquetDataCache.save_bars()` serializing `BarSeries` to Parquet.
+  - [ ] 1.5.3 Implement `ParquetDataCache.load_bars()` reading Parquet back to `BarSeries`.
+  - [ ] 1.5.4 Test cache write, read, and hit roundtrip in `tests/test_cache.py`.
+  - [ ] 1.5.5 Test cache miss and date range filtering in `tests/test_cache.py`.
 - [ ] **1.6 Data Adequacy & Corporate Actions Audit**
-  - [ ] 1.6.1 Define benchmark symbols list (5 symbols) in `src/trading_engine/data/benchmarks.py`.
+  - [ ] 1.6.1 Define benchmark symbols list (5 liquid symbols) in `src/trading_engine/data/benchmarks.py`.
   - [ ] 1.6.2 Implement unadjusted split/dividend spike detector in `src/trading_engine/data/audit.py`.
   - [ ] 1.6.3 Add unit tests for split spike detection in `tests/test_audit.py`.
-  - [ ] 1.6.4 Implement script `scripts/audit_data_adequacy.py` validating 3-year contiguous depth on benchmarks.
+  - [ ] 1.6.4 Implement contiguous data depth checker in `src/trading_engine/data/audit.py`.
+  - [ ] 1.6.5 Add unit tests for depth checker in `tests/test_audit.py`.
 - [ ] **1.7 Stage 1 Review & Hardening Gate**
-  - [ ] 1.7.1 Run full test suite for Stage 1.
+  - [ ] 1.7.1 Run full Stage 1 regression suite across all providers, cache, and audit.
   - [ ] 1.7.2 Grok audit and sign-off report in `docs/stage1_signoff.md`.
 
 ---
