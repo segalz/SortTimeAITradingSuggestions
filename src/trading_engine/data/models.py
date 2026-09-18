@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import math
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from typing import Iterator, Union
 
 import pandas as pd
@@ -189,3 +189,33 @@ class BarSeries:
             )
 
         return cls(symbol=symbol, timeframe=timeframe, bars=tuple(bars))
+
+
+TIMEFRAME_DELTAS: dict[str, timedelta] = {
+    "1m": timedelta(minutes=1),
+    "5m": timedelta(minutes=5),
+    "15m": timedelta(minutes=15),
+    "1h": timedelta(hours=1),
+    "1d": timedelta(days=1),
+}
+
+
+def filter_completed_candles(series: BarSeries, current_time: datetime) -> BarSeries:
+    """Filter out any candle that has not fully completed at `current_time`.
+
+    A candle with start timestamp `t` and timeframe duration `delta` is only
+    considered closed and completed once `current_time >= t + delta`.
+    """
+    if current_time.tzinfo is None:
+        raise ValueError("current_time must be timezone-aware (UTC).")
+    current_utc = current_time.astimezone(timezone.utc)
+
+    delta = TIMEFRAME_DELTAS.get(series.timeframe.lower())
+    if delta is None:
+        raise ValueError(f"Unknown timeframe duration for {series.timeframe!r}")
+
+    completed_bars = tuple(
+        bar for bar in series.bars if bar.timestamp + delta <= current_utc
+    )
+    return BarSeries(symbol=series.symbol, timeframe=series.timeframe, bars=completed_bars)
+
