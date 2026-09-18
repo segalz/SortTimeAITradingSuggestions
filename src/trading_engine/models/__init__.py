@@ -9,6 +9,7 @@ from .baselines import (
 )
 from .chronos_adapter import ChronosBoltTinyAdapter
 from .device_guard import DeviceGuardError, assert_cpu_only, enforce_cpu_environment
+from .kronos_adapter import KronosMiniAdapter
 
 __all__ = [
     "BaselineModel",
@@ -16,6 +17,7 @@ __all__ = [
     "DeviceGuardError",
     "DriftBaseline",
     "Forecast",
+    "KronosMiniAdapter",
     "LastValueBaseline",
     "MovingAverageBaseline",
     "assert_cpu_only",
