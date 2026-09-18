@@ -132,9 +132,9 @@ To ensure rapid, deterministic, and non-blocking execution by coding agents with
 
 ### Stage 4: CPU Forecasting Models Spike (Chronos-Bolt-Tiny & Kronos-Mini)
 
-- [ ] **4.1 CPU-Only Device Guard**
-  - [ ] 4.1.1 Implement runtime assertion forbidding CUDA/MPS/DirectML in `src/trading_engine/models/device_guard.py`.
-  - [ ] 4.1.2 Create unit tests in `tests/test_device_guard.py`.
+- [x] **4.1 CPU-Only Device Guard**
+  - [x] 4.1.1 Implement runtime assertion forbidding CUDA/MPS/DirectML in `src/trading_engine/models/device_guard.py`.
+  - [x] 4.1.2 Create unit tests in `tests/test_device_guard.py`.
 - [ ] **4.2 Chronos-Bolt-Tiny Integration**
   - [ ] 4.2.1 Implement `ChronosBoltTinyAdapter` in `src/trading_engine/models/chronos_adapter.py`.
   - [ ] 4.2.2 Implement smoke test and cold-load timer in `tests/test_chronos_smoke.py`.
