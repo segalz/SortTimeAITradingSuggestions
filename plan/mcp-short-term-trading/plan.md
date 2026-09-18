@@ -12,270 +12,251 @@ The system combines:
 
 ---
 
-## Operating Protocol & Quality Gate Architecture
+## Operating Protocol & Atomic Micro-Step Rules
 
-Each stage is divided into atomic, bite-sized **Micro-Steps**.
-For every micro-step:
-1. **Task Definition**: The Supervisor (Antigravity) formulates the exact prompt and constraints for the micro-step.
-2. **Coder Execution**: The Coder Model writes the minimal, clean, type-hinted code and unit tests.
-3. **Reviewer Verification**: The Reviewer Model (e.g., Grok / independent reviewer) audits the diff, checks edge cases, and verifies against constraints.
-4. **Immediate Progress Update**: Upon approval, `progress.md` is updated immediately with status, timestamp, and summary of changes.
-5. **Stage Gate Review**: At the end of each Stage, full regression tests and leakage/integrity checks are run before transitioning to the next Stage.
+To ensure rapid, deterministic, and non-blocking execution by coding agents:
+1. **Single Responsibility Rule**: Each micro-step does exactly ONE atomic thing (one dataclass, one validator, one standalone function, or one test file).
+2. **Execution Limit**: A micro-step must be solvable in under 30 seconds with minimal prompt size (< 15 lines).
+3. **Step Workflow**:
+   - Supervisor (Antigravity) issues a short, razor-sharp instruction.
+   - Coder Model (Cline) edits the target file and runs unit tests.
+   - Reviewer Model (Grok) validates the atomic diff.
+   - Supervisor logs completion in `progress.md` and commits to Git.
 
 ---
 
-## Stages and Micro-Steps Breakdown
+## Granular Stages and Micro-Steps Breakdown
 
 ### Stage 1: Environment, Tooling, Packaging & Data Adequacy
-**Goal:** Establish a rock-solid Python 3.12+ project foundation, secret loading, data contracts, local caching, and verify historical data depth for 1h candles.
 
 - [x] **1.1 Project Scaffolding & Packaging**
-  - Create `pyproject.toml` with Hatchling build-backend, defining dependencies: `pandas`, `numpy`, `httpx`, `pydantic`, `mcp`, `python-dotenv`, `pytest`.
-  - Create `.gitignore` (ignoring `.venv`, `keys.env`, `*.db`, `*.parquet`, `__pycache__`, `artifacts/`, `data/cache/`).
-  - Create directory structure: `src/trading_engine/`, `tests/`, `data/cache/`, `docs/`.
+  - [x] 1.1.1 Create `pyproject.toml` with Hatchling, dependencies, and `pythonpath = ["src"]`.
+  - [x] 1.1.2 Create `.gitignore` and base directory structure (`src/`, `tests/`, `data/cache/`, `docs/`).
+  - [x] 1.1.3 Add basic scaffolding smoke test `tests/test_scaffolding.py`.
 - [x] **1.2 Configuration & Secrets Management**
-  - Implement `src/trading_engine/config.py` loading `keys.env` with strict redaction in logs.
-  - Support credentials: Alpaca Paper API keys, Finnhub API key, and LLM provider keys.
-  - Add unit tests validating credential format, prefix checks, and redaction.
-- [ ] **1.3 Data Ingestion Contract & Candle Representation**
-  - Define immutable data structures: `Candle`, `BarSeries` (timestamp UTC, open, high, low, close, volume, optional amount/vwap).
-  - Implement validation: monotonic ascending timestamps, non-negative volumes, high >= low, open/close within [low, high].
-  - Add unit tests for candle validation and error handling.
-- [ ] **1.4 Historical Market Data Providers (1h & 1d)**
-  - Implement provider client interface with support for Alpaca Data API (for 1h bars) and yfinance (for fallback/daily).
-  - Implement rate limiting and retry backoff.
-  - Add unit tests with mocked HTTP responses.
-- [ ] **1.5 Local Persistent Data Cache**
-  - Implement local disk caching (Parquet or SQLite) for historical bars to guarantee deterministic, offline-repeatable runs.
-  - Implement cache invalidation and cache hit/miss telemetry.
-  - Add unit tests testing cache read/write fidelity.
-- [ ] **1.6 Data Adequacy & Corporate Adjustment Audit Script**
-  - Write verification script `scripts/audit_data_adequacy.py` testing 5 benchmark symbols across at least 2 asset classes/regimes.
-  - Verify contiguous 1h history, missing candle handling, holiday calendars, and split/dividend adjustments.
-  - Add unit tests for split-detection and unadjusted return threshold checks.
+  - [x] 1.2.1 Implement `src/trading_engine/config.py` with `Settings` dataclass and safe redaction.
+  - [x] 1.2.2 Implement strict paper-only validation (reject live AK keys, require PK, min secret len).
+  - [x] 1.2.3 Add custom `__repr__` leak prevention and unit tests in `tests/test_config.py`.
+- [ ] **1.3 Data Contracts: Candle & BarSeries**
+  - [ ] 1.3.1 Create `src/trading_engine/data/__init__.py` and define `DataContractError` and `Candle` dataclass with price/timestamp validators in `src/trading_engine/data/models.py`.
+  - [ ] 1.3.2 Create `tests/test_candle.py` testing `Candle` valid creation and error cases (naive datetime, inverted low/high, negative price).
+  - [ ] 1.3.3 Add `BarSeries` container in `src/trading_engine/data/models.py` with strict monotonic timestamp assertion.
+  - [ ] 1.3.4 Create `tests/test_bar_series.py` verifying `BarSeries` ordering, duplicate rejection, and indexing.
+  - [ ] 1.3.5 Add `to_dataframe()` method to `BarSeries`.
+  - [ ] 1.3.6 Add `from_dataframe()` classmethod to `BarSeries`.
+  - [ ] 1.3.7 Create `tests/test_dataframe_roundtrip.py` testing DataFrame conversions.
+- [ ] **1.4 Historical Market Data Ingestion**
+  - [ ] 1.4.1 Define abstract base class `MarketDataProvider` in `src/trading_engine/data/providers/base.py`.
+  - [ ] 1.4.2 Implement `AlpacaDataProvider` for 1h bars in `src/trading_engine/data/providers/alpaca.py`.
+  - [ ] 1.4.3 Add unit tests for `AlpacaDataProvider` with mocked API responses in `tests/test_alpaca_provider.py`.
+  - [ ] 1.4.4 Implement `YFinanceDataProvider` for fallback daily candles in `src/trading_engine/data/providers/yfinance.py`.
+  - [ ] 1.4.5 Add unit tests for `YFinanceDataProvider` with mocked data in `tests/test_yfinance_provider.py`.
+- [ ] **1.5 Local Persistent Cache**
+  - [ ] 1.5.1 Implement `ParquetDataCache` interface in `src/trading_engine/data/cache.py`.
+  - [ ] 1.5.2 Add `save_bars()` and `load_bars()` with automatic parquet file organization by symbol/timeframe.
+  - [ ] 1.5.3 Create unit tests in `tests/test_cache.py` verifying cache write, read, hit, and miss behavior.
+- [ ] **1.6 Data Adequacy & Corporate Actions Audit**
+  - [ ] 1.6.1 Define benchmark symbols list (5 symbols) in `src/trading_engine/data/benchmarks.py`.
+  - [ ] 1.6.2 Implement unadjusted split/dividend spike detector in `src/trading_engine/data/audit.py`.
+  - [ ] 1.6.3 Add unit tests for split spike detection in `tests/test_audit.py`.
+  - [ ] 1.6.4 Implement script `scripts/audit_data_adequacy.py` validating 3-year contiguous depth on benchmarks.
 - [ ] **1.7 Stage 1 Review & Hardening Gate**
-  - Run full test suite for Stage 1.
-  - Reviewer model audit of Stage 1 architecture.
-  - Record data adequacy findings in `docs/data_adequacy_report.md`.
+  - [ ] 1.7.1 Run full test suite for Stage 1.
+  - [ ] 1.7.2 Grok audit and sign-off report in `docs/stage1_signoff.md`.
 
 ---
 
 ### Stage 2: Walk-Forward Evaluation Harness & Baselines (Leakage-Proof)
-**Goal:** Build a strictly chronological rolling-origin walk-forward evaluation harness with zero lookahead, including all 5 mandatory leakage tests.
 
-- [ ] **2.1 Rolling-Origin Walk-Forward Splitter**
-  - Implement chronological walk-forward generator: generates cutoffs $t$, calibration windows, and test evaluation windows.
-  - Guarantee strict separation: future data never passed into past transforms.
-  - Unit tests verifying split windows and bounds.
-- [ ] **2.2 Baseline Model: Last-Value (Persistence / Naive)**
-  - Implement naive baseline predicting constant last-known price across horizon $H=12$.
-  - Unit tests verifying output shapes and exact values.
-- [ ] **2.3 Baseline Model: Historical Drift / Simple Return**
-  - Implement drift baseline extrapolating historical trend over specified lookback.
-  - Unit tests verifying math and determinism.
-- [ ] **2.4 Baseline Model: Exponential Smoothing / Moving Average**
-  - Implement EMA / SMA baseline for price path forecasting.
-  - Unit tests verifying math against pure Pandas calculations.
-- [ ] **2.5 Leakage Test 1: Off-By-One Bar Assertion**
-  - Executable test: assert forecast at cutoff $t$ consumes no candle whose bar-close timestamp $> t$.
-  - Verify against bar-close semantics, not bar-open.
-- [ ] **2.6 Leakage Test 2: Target Shuffle Test**
-  - Executable test: shuffle target returns within test window; verify every model collapses to chance ($R^2 \le 0$ or directional accuracy $\approx 50\%$).
-- [ ] **2.7 Leakage Test 3: Future-Scaler Test**
-  - Executable test: assert normalization statistics computed at cutoff $t$ are bit-identical whether future rows exist in the dataframe or not.
-- [ ] **2.8 Leakage Test 4: Incomplete / In-Progress Candle Test**
-  - Executable test: assert incomplete (current live) bar is strictly excluded from historical inputs.
-- [ ] **2.9 Leakage Test 5: Adjustment-Consistency Test**
-  - Executable test: flag any single-bar return exceeding threshold without recorded corporate action.
-- [ ] **2.10 Harness Runner & Metric Aggregator**
-  - Implement metrics: MAE, RMSE, Directional Accuracy, Pinball loss for quantiles.
-  - Multiplicity correction: Benjamini-Hochberg adjustment implementation.
-  - Unit tests for metric calculators.
-- [ ] **2.11 Stage 2 Review & Hardening Gate**
-  - Full test run of all 5 leakage tests and baseline benchmarks.
-  - Reviewer model audit of harness integrity.
+- [ ] **2.1 Walk-Forward Splitter**
+  - [ ] 2.1.1 Implement chronological rolling-origin cutoff generator in `src/trading_engine/evaluation/walk_forward.py`.
+  - [ ] 2.1.2 Add calibration and out-of-sample test window partitioner.
+  - [ ] 2.1.3 Create unit tests in `tests/test_walk_forward.py` verifying zero time-travel in splits.
+- [ ] **2.2 Baseline Models**
+  - [ ] 2.2.1 Implement `LastValueBaseline` (constant persistence) in `src/trading_engine/models/baselines.py`.
+  - [ ] 2.2.2 Create unit tests in `tests/test_baseline_last_value.py`.
+  - [ ] 2.2.3 Implement `DriftBaseline` (historical return extrapolation) in `src/trading_engine/models/baselines.py`.
+  - [ ] 2.2.4 Create unit tests in `tests/test_baseline_drift.py`.
+  - [ ] 2.2.5 Implement `MovingAverageBaseline` (SMA/EMA path) in `src/trading_engine/models/baselines.py`.
+  - [ ] 2.2.6 Create unit tests in `tests/test_baseline_ma.py`.
+- [ ] **2.3 Executable Leakage Tests**
+  - [ ] 2.3.1 Implement Leakage Test 1: Off-by-one bar close timestamp assertion in `tests/test_leakage_off_by_one.py`.
+  - [ ] 2.3.2 Implement Leakage Test 2: Target shuffle collapse test in `tests/test_leakage_target_shuffle.py`.
+  - [ ] 2.3.3 Implement Leakage Test 3: Future-scaler bit-identical test in `tests/test_leakage_future_scaler.py`.
+  - [ ] 2.3.4 Implement Leakage Test 4: Incomplete live candle exclusion test in `tests/test_leakage_incomplete_candle.py`.
+  - [ ] 2.3.5 Implement Leakage Test 5: Price adjustment consistency check in `tests/test_leakage_adjustment.py`.
+- [ ] **2.4 Evaluation Metrics & Runner**
+  - [ ] 2.4.1 Implement forecast error metrics (MAE, RMSE, Directional Accuracy) in `src/trading_engine/evaluation/metrics.py`.
+  - [ ] 2.4.2 Implement Benjamini-Hochberg multiplicity correction in `src/trading_engine/evaluation/stats.py`.
+  - [ ] 2.4.3 Create `HarnessRunner` executing baselines across rolling cutoffs in `src/trading_engine/evaluation/harness.py`.
+  - [ ] 2.4.4 Create tests in `tests/test_harness.py` verifying metric calculation on synthetic series.
+- [ ] **2.5 Stage 2 Review & Hardening Gate**
+  - [ ] 2.5.1 Run all leakage tests and verify pass.
+  - [ ] 2.5.2 Grok audit and sign-off report in `docs/stage2_signoff.md`.
 
 ---
 
-### Stage 3: Model-Neutral Forecast Contract, Calibration & Cost Model
-**Goal:** Create an decoupled forecast interface, probability calibration (Isotonic/Platt), and realistic transaction cost model.
+### Stage 3: Model-Neutral Contract, Calibration & Cost Model
 
-- [ ] **3.1 Forecast Data Contracts (`ForecastRequest`, `ForecastResult`)**
-  - Define `ForecastRequest` (symbol, timeframe, cutoff, horizon, candles, covariates).
-  - Define `ForecastResult` (model_id, predicted_path, quantiles P10/P50/P90, calibrated_probs, uncertainty_score, latency_ms).
-  - Pydantic models with strict validation.
-- [ ] **3.2 Model Adapter Lifecycle Interface**
-  - Abstract base class `ModelAdapter`: `load()`, `predict()`, `health()`, `unload()`, `capabilities()`.
-  - Implement thread pinning and CPU thread affinity management.
-- [ ] **3.3 Transaction Cost & Sensitivity Model**
-  - Implement cost calculator: Taker fee per asset class, bid-ask spread, slippage model (constant + volatility-scaled).
-  - Mandatory 2x sensitivity evaluation function: if net edge flips sign at 2x costs, signal is marked unviable.
-  - Unit tests for cost computations.
-- [ ] **3.4 Probability Calibration Engine**
-  - Implement Platt scaling (logistic) and Isotonic regression fitted *strictly on calibration window*.
-  - Rule: raw quantile count ending above close is never emitted as probability.
-  - Unit tests asserting calibration bounds [0.0, 1.0].
-- [ ] **3.5 Reliability Diagram & Brier Score Evaluator**
-  - Implement Brier score calculator and reliability curve binning.
-  - Unit tests verifying Brier score on synthetic perfect vs random probabilities.
-- [ ] **3.6 Stage 3 Review & Hardening Gate**
-  - Full test suite run. Reviewer model audit of contracts and calibration logic.
+- [ ] **3.1 Data Contracts**
+  - [ ] 3.1.1 Define `ForecastRequest` schema in `src/trading_engine/contracts/forecast.py`.
+  - [ ] 3.1.2 Define `ForecastResult` schema with quantiles (P10, P50, P90) in `src/trading_engine/contracts/forecast.py`.
+  - [ ] 3.1.3 Create unit tests in `tests/test_forecast_contract.py`.
+- [ ] **3.2 Model Adapter Interface**
+  - [ ] 3.2.1 Define `ModelAdapter` abstract base class with lifecycle hooks (`load`, `predict`, `unload`, `capabilities`) in `src/trading_engine/contracts/adapter.py`.
+  - [ ] 3.2.2 Implement thread pinning and CPU affinity clamp helper in `src/trading_engine/contracts/device.py`.
+  - [ ] 3.2.3 Create unit tests in `tests/test_model_adapter.py`.
+- [ ] **3.3 Transaction Cost Model**
+  - [ ] 3.3.1 Implement taker fee and spread calculator in `src/trading_engine/risk/cost_model.py`.
+  - [ ] 3.3.2 Implement slippage model (constant + volatility-scaled) in `src/trading_engine/risk/cost_model.py`.
+  - [ ] 3.3.3 Implement 2x cost sensitivity gate function in `src/trading_engine/risk/cost_model.py`.
+  - [ ] 3.3.4 Create unit tests in `tests/test_cost_model.py`.
+- [ ] **3.4 Probability Calibration**
+  - [ ] 3.4.1 Implement Platt scaling (logistic) calibrated strictly on calibration window in `src/trading_engine/evaluation/calibration.py`.
+  - [ ] 3.4.2 Implement Isotonic regression calibrator in `src/trading_engine/evaluation/calibration.py`.
+  - [ ] 3.4.3 Implement Brier score and reliability diagram binning in `src/trading_engine/evaluation/calibration.py`.
+  - [ ] 3.4.4 Create unit tests in `tests/test_calibration.py`.
+- [ ] **3.5 Stage 3 Review & Hardening Gate**
+  - [ ] 3.5.1 Run full Stage 3 test suite.
+  - [ ] 3.5.2 Grok audit and sign-off report in `docs/stage3_signoff.md`.
 
 ---
 
 ### Stage 4: CPU Forecasting Models Spike (Chronos-Bolt-Tiny & Kronos-Mini)
-**Goal:** Integrate and evaluate CPU-only zero-shot time-series models against Stage 0 budgets and baselines.
 
-- [ ] **4.1 CPU-Only Runtime Environment & Device Guard**
-  - Assert runtime explicitly forces CPU; hard fail if CUDA/DirectML/MPS is initialized.
-  - Pin PyTorch/ONNX thread count to prevent freezing laptop UI.
-- [ ] **4.2 Chronos-Bolt-Tiny Adapter**
-  - Implement adapter for `amazon/chronos-bolt-tiny`.
-  - Smoke test on CPU, cold load timing, peak RSS tracking.
-  - Map output to `ForecastResult` quantiles (P10, P50, P90).
-- [ ] **4.3 Chronos-Bolt-Tiny Walk-Forward Benchmark**
-  - Run Chronos-Bolt-Tiny through Stage 2 walk-forward harness on benchmark symbols.
-  - Record latency (warm p50, p95), memory, and accuracy vs baselines.
-- [ ] **4.4 Kronos-Mini Vendored Setup & Tokenizer Verification**
-  - Vendor `NeoQuasar/Kronos-mini` model and tokenizer classes with recorded commit SHA.
-  - Verify paired tokenizer/weights consistency.
-- [ ] **4.5 Kronos-Mini Adapter & CPU Benchmark**
-  - Implement adapter for `Kronos-mini`.
-  - Measure latency at `sample_count=1` and calibrated sample count.
-  - Run walk-forward benchmark and record Stage 0 budget compliance.
-- [ ] **4.6 Multiplicity Correction & Comparative Assessment Report**
-  - Calculate Benjamini-Hochberg corrected metrics comparing models vs baselines.
-  - Generate assessment summary (GO / DEFER / NO-GO) per model.
-- [ ] **4.7 Stage 4 Review & Hardening Gate**
-  - Full test suite run. Reviewer model audit of benchmark results.
+- [ ] **4.1 CPU-Only Device Guard**
+  - [ ] 4.1.1 Implement runtime assertion forbidding CUDA/MPS/DirectML in `src/trading_engine/models/device_guard.py`.
+  - [ ] 4.1.2 Create unit tests in `tests/test_device_guard.py`.
+- [ ] **4.2 Chronos-Bolt-Tiny Integration**
+  - [ ] 4.2.1 Implement `ChronosBoltTinyAdapter` in `src/trading_engine/models/chronos_adapter.py`.
+  - [ ] 4.2.2 Implement smoke test and cold-load timer in `tests/test_chronos_smoke.py`.
+  - [ ] 4.2.3 Run walk-forward benchmark on benchmark symbols and record p50/p95 latency and RSS memory.
+- [ ] **4.3 Kronos-Mini Integration**
+  - [ ] 4.3.1 Vendor `NeoQuasar/Kronos-mini` code and tokenizer in `src/trading_engine/models/vendored/kronos/`.
+  - [ ] 4.3.2 Implement `KronosMiniAdapter` in `src/trading_engine/models/kronos_adapter.py`.
+  - [ ] 4.3.3 Implement smoke test verifying paired tokenizer/model weights in `tests/test_kronos_smoke.py`.
+  - [ ] 4.3.4 Run walk-forward benchmark and measure latency at sample_count=1 vs calibrated sample count.
+- [ ] **4.4 Candidate Comparative Assessment**
+  - [ ] 4.4.1 Run harness comparisons (models vs baselines) with Benjamini-Hochberg correction.
+  - [ ] 4.4.2 Produce formal assessment report in `docs/cpu-forecasting-models-assessment.md` (GO/DEFER/NO-GO).
+- [ ] **4.5 Stage 4 Review & Hardening Gate**
+  - [ ] 4.5.1 Run full Stage 4 test suite.
+  - [ ] 4.5.2 Grok audit and sign-off report in `docs/stage4_signoff.md`.
 
 ---
 
 ### Stage 5: Catalyst & Fundamental Sentiment Layer
-**Goal:** Port and modernize the news and analyst scoring pipeline from `traidAi` to provide the "Why Now?" catalyst for short-term trades.
 
-- [ ] **5.1 Finnhub News Ingestion & Balanced Day-Capping**
-  - Ingest company news via Finnhub API.
-  - Implement balanced date-capping (`PER_DAY_ARTICLES = 6`, max ceiling 90) to prevent mega-cap distortion.
-  - Unit tests with mock payloads.
-- [ ] **5.2 News LLM Scoring Engine with Fallback Chain**
-  - Implement news scoring prompt with structured JSON output: `{"score": 0-100, "rationale": "...", "catalyst_type": "..."}`.
-  - Implement provider chain: Grok -> Claude -> OpenAI -> Gemini -> fallback.
-  - Unit tests testing parsing and fallbacks.
-- [ ] **5.3 Sell-Side Analyst Consensus & Trend Tracker**
-  - Fetch consensus buckets (strong buy, buy, hold, sell, strong sell) from Finnhub & Yahoo Finance.
-  - Calculate normalized consensus score (-2.0 to +2.0) and monthly delta/revisions.
-  - Unit tests for score computation.
-- [ ] **5.4 Earnings Proximity & Event Guardrail**
-  - Detect next earnings date; flag proximity ($\le 14$ days or intraday reporting).
-  - Categorize event risk (abstain or adjust risk parameters).
-  - Unit tests for calendar logic.
-- [ ] **5.5 Unified Catalyst Score Aggregator**
-  - Combine News Score (weight ~50%), Analyst Consensus (weight ~30%), and Momentum/Event flags (weight ~20%).
-  - Unit tests for weighted catalyst scoring and missing data degradation.
+- [ ] **5.1 News Ingestion & Day Capping**
+  - [ ] 5.1.1 Implement Finnhub news fetcher with rate limiter in `src/trading_engine/catalysts/news_fetcher.py`.
+  - [ ] 5.1.2 Implement balanced date-capping (`PER_DAY_ARTICLES = 6`, max ceiling 90) in `src/trading_engine/catalysts/news_aggregator.py`.
+  - [ ] 5.1.3 Create unit tests in `tests/test_news_aggregator.py`.
+- [ ] **5.2 News LLM Scoring Engine**
+  - [ ] 5.2.1 Define structured JSON schema `NewsScoreResult` in `src/trading_engine/catalysts/schemas.py`.
+  - [ ] 5.2.2 Implement prompt builder for news scoring in `src/trading_engine/catalysts/prompts.py`.
+  - [ ] 5.2.3 Implement LLM caller with fallback chain (Grok -> Claude -> OpenAI -> Gemini) in `src/trading_engine/catalysts/news_scorer.py`.
+  - [ ] 5.2.4 Create unit tests with mocked LLM outputs in `tests/test_news_scorer.py`.
+- [ ] **5.3 Sell-Side Analyst Consensus**
+  - [ ] 5.3.1 Implement Finnhub & Yahoo Finance analyst recommendation fetcher in `src/trading_engine/catalysts/analysts.py`.
+  - [ ] 5.3.2 Implement consensus score formula (-2.0 to +2.0) and revision delta tracker in `src/trading_engine/catalysts/analysts.py`.
+  - [ ] 5.3.3 Create unit tests in `tests/test_analysts.py`.
+- [ ] **5.4 Earnings Guardrail**
+  - [ ] 5.4.1 Implement earnings calendar lookup and proximity calculator in `src/trading_engine/catalysts/earnings.py`.
+  - [ ] 5.4.2 Implement 14-day pre-earnings risk flag rule in `src/trading_engine/catalysts/earnings.py`.
+  - [ ] 5.4.3 Create unit tests in `tests/test_earnings.py`.
+- [ ] **5.5 Unified Catalyst Aggregator**
+  - [ ] 5.5.1 Implement `CatalystEngine` combining News, Analysts, and Earnings into a composite score in `src/trading_engine/catalysts/composite.py`.
+  - [ ] 5.5.2 Create unit tests in `tests/test_catalyst_composite.py`.
 - [ ] **5.6 Stage 5 Review & Hardening Gate**
-  - Full test suite run. Reviewer model audit of catalyst layer.
+  - [ ] 5.6.1 Run full Stage 5 test suite.
+  - [ ] 5.6.2 Grok audit and sign-off report in `docs/stage5_signoff.md`.
 
 ---
 
 ### Stage 6: Intraday Opportunity Screener
-**Goal:** Build a high-speed scanner filtering a universe of stocks down to the top 5–10 short-term breakout/reversal candidates.
 
-- [ ] **6.1 Universe Management & Liquidity Filtering**
-  - Manage tradeable universe (e.g. liquid US equities, min average daily volume $\ge \$20M$, price $\ge \$5$).
-  - Fast batch quote/data fetching.
-  - Unit tests for universe filtering.
-- [ ] **6.2 Relative Volume (RVOL) & Intraday Activity Engine**
-  - Compute 1h RVOL: current volume over 20-period moving average of volume for that same hour.
-  - Flag volume surges ($\ge 1.5\times$ or $2.0\times$).
-  - Unit tests for RVOL calculation across intraday bars.
-- [ ] **6.3 Relative Strength (RS) vs. Market Benchmarks**
-  - Calculate RS vs SPY and QQQ over 1-day, 5-day, and 20-day windows.
-  - Identify leadership (stocks rising or holding firm while benchmark drops).
-  - Unit tests for RS differential calculation.
-- [ ] **6.4 Technical Momentum & Mean-Reversion Triggers**
-  - Compute RSI(14), RSI Washout (recent oversold $< 30$ followed by recovery $> 35$), and moving average crossovers (EMA 9/21).
-  - Unit tests for indicator triggers.
-- [ ] **6.5 Multi-Factor Candidate Ranking & Pipeline Filter**
-  - Combine RVOL, RS, Catalyst Score, and Technical Trigger into a composite rank score.
-  - Output top 5–10 ranked candidates with tagged setup reasons.
-  - Unit tests for ranking and determinism.
+- [ ] **6.1 Universe Management**
+  - [ ] 6.1.1 Implement liquid universe loader ($> $20M volume, price $> $5) in `src/trading_engine/screener/universe.py`.
+  - [ ] 6.1.2 Create unit tests in `tests/test_universe.py`.
+- [ ] **6.2 RVOL & Intraday Surge**
+  - [ ] 6.2.1 Implement 1h Relative Volume (RVOL) calculator vs 20-period baseline in `src/trading_engine/screener/rvol.py`.
+  - [ ] 6.2.2 Create unit tests in `tests/test_rvol.py`.
+- [ ] **6.3 Relative Strength (RS)**
+  - [ ] 6.3.1 Implement RS vs SPY/QQQ over 1d, 5d, and 20d in `src/trading_engine/screener/relative_strength.py`.
+  - [ ] 6.3.2 Create unit tests in `tests/test_relative_strength.py`.
+- [ ] **6.4 Momentum & Reversal Indicators**
+  - [ ] 6.4.1 Implement RSI(14) and RSI Washout detector in `src/trading_engine/screener/momentum.py`.
+  - [ ] 6.4.2 Implement EMA crossover detector in `src/trading_engine/screener/momentum.py`.
+  - [ ] 6.4.3 Create unit tests in `tests/test_screener_momentum.py`.
+- [ ] **6.5 Composite Screener**
+  - [ ] 6.5.1 Implement `MarketScreener` ranking top 5-10 candidates in `src/trading_engine/screener/screener.py`.
+  - [ ] 6.5.2 Create integration test in `tests/test_screener.py`.
 - [ ] **6.6 Stage 6 Review & Hardening Gate**
-  - Full test suite run. Reviewer model audit of screener logic.
+  - [ ] 6.6.1 Run full Stage 6 test suite.
+  - [ ] 6.6.2 Grok audit and sign-off report in `docs/stage6_signoff.md`.
 
 ---
 
 ### Stage 7: Trade Setup Evaluator & Decision Policy
-**Goal:** Formulate actionable trade setups (Entry, SL, TP) and enforce strict risk management and fee-adjusted expected return gates.
 
-- [ ] **7.1 Trade Geometry Calculator (Entry, Stop Loss, Take Profit)**
-  - Price invalidation stop-loss based on recent swing low / ATR / quantile floor (P10).
-  - Price take-profit targets based on resistance levels / quantile target (P50/P90).
-  - Calculate gross Risk:Reward ratio (minimum target $\ge 2.0$).
-  - Unit tests for price bracket generation.
-- [ ] **7.2 Net Expected Value & 2x Fee Gatekeeper**
-  - Calculate Net EV: $P(\text{win}) \times (\text{Gain} - \text{Costs}) - P(\text{loss}) \times (\text{Loss} + \text{Costs})$.
-  - Run 2x cost sensitivity: if Net EV becomes negative at $2\times$ fees/spread/slippage, trigger immediate rejection.
-  - Unit tests for EV gate under varying spreads.
-- [ ] **7.3 Recommendation Policy (`BUY`, `HOLD`, `NO_DATA`)**
-  - Implement decision matrix: emit `BUY` only if:
-    1. Catalyst Score $\ge$ threshold
-    2. Model Forecast Direction is positive and calibrated
-    3. Net EV after 2x costs is positive
-    4. Gross R:R $\ge 2.0$
-  - Emit `HOLD` (with explanation) if edge is marginal or uncertainty is high.
-  - Emit `NO_DATA` if feeds are incomplete or stale.
-  - Unit tests for policy edge cases and abstention logic.
-- [ ] **7.4 Structured Trade Evidence Pack Generator**
-  - Output transparent payload: Raw model quantiles, Catalyst breakdown, Screener triggers, Price brackets, Net EV table, and plain-English rationale.
-  - Unit tests validating evidence pack completeness.
-- [ ] **7.5 Stage 7 Review & Hardening Gate**
-  - Full test suite run. Reviewer model audit of decision policy.
+- [ ] **7.1 Trade Geometry (Brackets)**
+  - [ ] 7.1.1 Implement invalidation Stop Loss calculator (swing low / ATR / P10) in `src/trading_engine/execution/geometry.py`.
+  - [ ] 7.1.2 Implement Take Profit target calculator (resistance / P50 / P90) in `src/trading_engine/execution/geometry.py`.
+  - [ ] 7.1.3 Create unit tests in `tests/test_geometry.py` asserting gross R:R >= 2.0.
+- [ ] **7.2 Net Expected Value (EV) Gate**
+  - [ ] 7.2.1 Implement Net EV formula subtracting spread, slippage, and taker fees in `src/trading_engine/execution/ev_gate.py`.
+  - [ ] 7.2.2 Implement 2x cost sensitivity rejector in `src/trading_engine/execution/ev_gate.py`.
+  - [ ] 7.2.3 Create unit tests in `tests/test_ev_gate.py`.
+- [ ] **7.3 Recommendation Policy**
+  - [ ] 7.3.1 Implement decision policy (`BUY`, `HOLD`, `NO_DATA`) in `src/trading_engine/execution/policy.py`.
+  - [ ] 7.3.2 Implement structured evidence pack generator in `src/trading_engine/execution/evidence.py`.
+  - [ ] 7.3.3 Create unit tests for policy and evidence generation in `tests/test_policy.py`.
+- [ ] **7.4 Stage 7 Review & Hardening Gate**
+  - [ ] 7.4.1 Run full Stage 7 test suite.
+  - [ ] 7.4.2 Grok audit and sign-off report in `docs/stage7_signoff.md`.
 
 ---
 
 ### Stage 8: Local MCP Server Implementation
-**Goal:** Expose the complete short-term trading engine as a standard Model Context Protocol (MCP) server over stdio for agentic consumption.
 
-- [ ] **8.1 MCP Server Base Setup & Lifecycle**
-  - Initialize MCP server using standard Python MCP SDK (`mcp.server.fastmcp` or stdio protocol).
-  - Implement lifecycle: startup checks, resource allocations, graceful shutdown.
-  - Unit tests for server initialization.
-- [ ] **8.2 MCP Tool 1: `scan_market_opportunities`**
-  - Expose screener: parameters for minimum RVOL, sector filter, max candidates.
-  - Returns ranked candidate list with technical and volume telemetry.
-  - Integration tests via MCP tool invocation.
-- [ ] **8.3 MCP Tool 2: `get_time_series_forecast`**
-  - Expose forecasting engine: inputs (symbol, timeframe, horizon); outputs (quantiles, calibrated probabilities, uncertainty).
-  - Integration tests via MCP tool invocation.
-- [ ] **8.4 MCP Tool 3: `get_catalyst_sentiment`**
-  - Expose catalyst engine: inputs (symbol, days_back); outputs (news summary, analyst consensus score, earnings flag).
-  - Integration tests via MCP tool invocation.
-- [ ] **8.5 MCP Tool 4: `evaluate_trade_setup`**
-  - Expose risk evaluator: inputs (symbol, entry_price, stop_loss, take_profit); outputs (Net EV, 2x cost sensitivity, R:R).
-  - Integration tests via MCP tool invocation.
-- [ ] **8.6 MCP Tool 5: `get_short_term_recommendation`**
-  - Unified orchestration tool: runs scan -> forecast -> catalyst -> risk check -> outputs final evidence-backed recommendation (`BUY`/`HOLD`/`NO_DATA`).
-  - Integration tests via MCP tool invocation.
-- [ ] **8.7 Error Handling, Concurrency & UI Safety**
-  - Bound subprocess timeouts, enforce non-blocking IO, clamp thread counts to preserve host laptop responsiveness.
-  - Unit tests for timeout recovery and memory cleanup.
+- [ ] **8.1 FastMCP Server Foundation**
+  - [ ] 8.1.1 Initialize FastMCP server with lifecycle management in `src/trading_engine/mcp/server.py`.
+  - [ ] 8.1.2 Create smoke test for server startup in `tests/test_mcp_server.py`.
+- [ ] **8.2 Tool 1: `scan_market_opportunities`**
+  - [ ] 8.2.1 Implement MCP tool registering `scan_market_opportunities` in `src/trading_engine/mcp/tools_screener.py`.
+  - [ ] 8.2.2 Add unit test for tool invocation in `tests/test_mcp_tools.py`.
+- [ ] **8.3 Tool 2: `get_time_series_forecast`**
+  - [ ] 8.3.1 Implement MCP tool registering `get_time_series_forecast` in `src/trading_engine/mcp/tools_forecast.py`.
+  - [ ] 8.3.2 Add unit test for tool invocation in `tests/test_mcp_tools.py`.
+- [ ] **8.4 Tool 3: `get_catalyst_sentiment`**
+  - [ ] 8.4.1 Implement MCP tool registering `get_catalyst_sentiment` in `src/trading_engine/mcp/tools_catalyst.py`.
+  - [ ] 8.4.2 Add unit test for tool invocation in `tests/test_mcp_tools.py`.
+- [ ] **8.5 Tool 4: `evaluate_trade_setup`**
+  - [ ] 8.5.1 Implement MCP tool registering `evaluate_trade_setup` in `src/trading_engine/mcp/tools_risk.py`.
+  - [ ] 8.5.2 Add unit test for tool invocation in `tests/test_mcp_tools.py`.
+- [ ] **8.6 Tool 5: `get_short_term_recommendation`**
+  - [ ] 8.6.1 Implement orchestrated recommendation tool in `src/trading_engine/mcp/tools_orchestration.py`.
+  - [ ] 8.6.2 Add unit test for tool invocation in `tests/test_mcp_tools.py`.
+- [ ] **8.7 Concurrency & Host UI Safety**
+  - [ ] 8.7.1 Enforce process timeouts, async IO, and CPU thread pinning in `src/trading_engine/mcp/server.py`.
+  - [ ] 8.7.2 Add unit tests for timeout and error handling in `tests/test_mcp_safety.py`.
 - [ ] **8.8 Stage 8 Review & Hardening Gate**
-  - Full test suite run. Reviewer model audit of MCP protocol conformance.
+  - [ ] 8.8.1 Run full Stage 8 test suite.
+  - [ ] 8.8.2 Grok audit and sign-off report in `docs/stage8_signoff.md`.
 
 ---
 
-### Stage 9: End-to-End Integration, CLI Verification & Final Hardening
-**Goal:** Verify the full system end-to-end, provide local CLI test tools, and document all operations.
+### Stage 9: End-to-End Integration, CLI & Final Hardening
 
-- [ ] **9.1 End-to-End Synthetic & Historical Integration Tests**
-  - Run full simulated cycle from market scan to MCP tool response on historical data.
-  - Verify zero leakage, deterministic execution, and reproducible outputs.
-- [ ] **9.2 Local CLI Diagnostic Runner**
-  - Implement `scripts/run_cli.py` for standalone headless execution and debugging without an MCP client.
-- [ ] **9.3 Documentation & Agent Configuration Guide**
-  - Write `README.md` in repository root explaining setup, environment keys, and running the MCP server.
-  - Provide Claude Desktop / Antigravity / Cursor MCP configuration snippets.
-- [ ] **9.4 Final Security, Licensing & Budget Audit**
-  - Audit: no keys in git, clean open-source licenses, CPU latency $\le 2000$ ms p95, RAM $\le 2$ GB.
-  - Produce final sign-off report in `docs/completion_report.md`.
+- [ ] **9.1 End-to-End Synthetic Simulation**
+  - [ ] 9.1.1 Implement full simulated run from market scan to trade recommendation in `tests/test_e2e_simulation.py`.
+  - [ ] 9.1.2 Verify determinism and zero data leakage.
+- [ ] **9.2 Headless CLI Diagnostic Runner**
+  - [ ] 9.2.1 Implement `scripts/run_cli.py` for headless execution and quick diagnostic scans.
+  - [ ] 9.2.2 Test CLI runner in `tests/test_cli.py`.
+- [ ] **9.3 Documentation & MCP Config Snippets**
+  - [ ] 9.3.1 Create `README.md` with complete setup instructions.
+  - [ ] 9.3.2 Provide Claude Desktop, Antigravity, and Cursor MCP client JSON snippets in `docs/mcp_client_setup.md`.
+- [ ] **9.4 Final Audit & Verification**
+  - [ ] 9.4.1 Audit all code licenses, credentials safety, and Stage 0 performance budgets.
+  - [ ] 9.4.2 Produce final sign-off report in `docs/completion_report.md`.
